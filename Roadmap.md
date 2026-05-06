@@ -8,7 +8,7 @@
 - [x] **Dag 1:** De Database Koppeling. PostgreSQL verbinden met Spring Boot.
 - [x] **Dag 2:** Entity Mapping. De AnalyticEvent Java class mappen naar een SQL-tabel met JPA.
 - [x] **Dag 3:** Data Ingestion API. Een `/track` endpoint maken dat JSON accepteert en opslaat.
-- [ ] **Dag 4:** CORS Mastery. Backend configureren zodat de Vue-app (poort 5173) veilig data mag sturen.
+- [x] **Dag 4:** CORS Mastery. Backend configureren zodat de Vue-app (poort 5173) veilig data mag sturen.
 - [ ] **Dag 5:** Postman Testing. Alle mogelijke foutmeldingen testen (lege data, foute JSON).
 
 ### De Tracker Script (JS/TS)

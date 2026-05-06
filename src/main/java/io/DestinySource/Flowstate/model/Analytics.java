@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "analytics")
@@ -17,4 +19,12 @@ public class Analytics {
 
     private String eventName;
     private String description;
+
+    @CreationTimestamp
+    @Column(updatable = false, nullable = false)
+    private LocalDateTime createdAt;
+
+    @CreationTimestamp
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
 }
