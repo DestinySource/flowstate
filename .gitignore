@@ -60,3 +60,5 @@ build/
 *.properties
 application.properties
 src/main/resources/application.properties
+src/main/resources/application-dev.properties
+src/main/resources/keystore.p12
