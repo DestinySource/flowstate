@@ -16,8 +16,22 @@ public class Analytics {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "visitor_id")
+    private String visitorId;
 
+    @Column(name = "url")
+    private String url;
+
+    @Column(name = "referrer")
+    private String referrer;
+
+    @Column(name = "site_id")
+    private String siteId;
+
+    @Column(name = "event_name")
     private String eventName;
+
+    @Column(name = "description")
     private String description;
 
     @CreationTimestamp

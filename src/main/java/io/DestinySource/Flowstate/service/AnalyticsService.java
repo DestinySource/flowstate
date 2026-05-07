@@ -35,12 +35,25 @@ public class AnalyticsService {
     @Transactional
     public AnalyticsDTO saveEvent(AnalyticsDTO dto) {
         Analytics entity = new Analytics();
-        entity.setEventName(dto.getEventName());
-        entity.setDescription(dto.getDescription());
+        entity.setVisitorId(dto.visitorId());
+        entity.setUrl(dto.url());
+        entity.setReferrer(dto.referrer());
+        entity.setSiteId(dto.siteId());
+        entity.setEventName(dto.eventName());
+        entity.setDescription(dto.description());
         return mapToDTO(repository.save(entity));
     }
 
     private AnalyticsDTO mapToDTO(Analytics entity) {
-        return new AnalyticsDTO(entity.getId(), entity.getEventName(), entity.getDescription(), entity.getCreatedAt());
+        return new AnalyticsDTO(
+                entity.getId(),
+                entity.getVisitorId(),
+                entity.getUrl(),
+                entity.getReferrer(),
+                entity.getSiteId(),
+                entity.getEventName(),
+                entity.getDescription(),
+                entity.getCreatedAt()
+        );
     }
 }
