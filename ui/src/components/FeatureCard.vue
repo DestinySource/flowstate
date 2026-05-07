@@ -9,16 +9,16 @@ defineProps<{
 </script>
 
 <template>
-  <!-- whileInView zorgt ervoor dat de animatie start bij het scrollen -->
   <motion.div
-      class="card"
-      :initial="{ opacity: 0, scale: 0.8 }"
-      :while-in-view="{ opacity: 1, scale: 1 }"
-      :viewport="{ once: true }"
-      :transition="{ delay: index * 0.15 }"
-      :while-hover="{ y: -10, transition: { duration: 0.2 } }"
-      :while-press="{ scale: 0.95 }"
+      class="card stitch-card"
+      :while-hover="{
+          borderColor: '#FF2D78',
+          scale: 1.1,
+          transition: { duration: 0.2 }  }"
   >
+    <div class="label-caps" style="color: var(--tertiary); font-size: 10px; margin-bottom: 8px;">
+      SYSTEM_NODE_0{{ index + 1 }}
+    </div>
     <div class="icon">{{ icon }}</div>
     <h3>{{ title }}</h3>
   </motion.div>

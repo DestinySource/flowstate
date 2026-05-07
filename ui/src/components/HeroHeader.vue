@@ -31,8 +31,9 @@ h1 {
   margin: 0;
 }
 .divider {
-  height: 4px;
-  background: #42b883;
-  margin: 1rem auto;
+  height: 2px;
+  background: var(--primary);
+  box-shadow: 0 0 10px var(--primary-glow);
+  margin: 1.5rem auto;
 }
 </style>
