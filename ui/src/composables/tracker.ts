@@ -1,5 +1,7 @@
+import {createBlock} from "vue";
+
 interface AnalyticsPayload {
-    visitorId: string;
+    visitorId: string | null;
     url: string;
     referrer: string;
     siteId: string;
@@ -11,12 +13,27 @@ interface AnalyticsPayload {
     const scriptTag = document.querySelector('script[data-site-id]') as HTMLScriptElement;
     const siteId: string = scriptTag?.getAttribute('data-site-id') || 'UNKNOWN';
     const endpoint: string = "https://localhost:8443/api/v1/analytics";
-
+    const getVisitorId = () => localStorage.getItem("user_id") || "anonymous";
     console.log(`%c ⚡ Flowstate: Tracking actief voor ${siteId}`, "color: #42b883; font-weight: bold;");
+
+    const sendData = (payload: AnalyticsPayload) => {
+        const blob = new Blob([JSON.stringify(payload)], {type: "application/json"});
+
+        const success = navigator.sendBeacon(endpoint, blob);
+
+        if (!success) {
+            fetch(endpoint, {
+                method: "POST",
+                body: JSON.stringify(payload),
+                headers: {"Content-Type": "application/json"},
+                keepalive: true
+            });
+        }
+    };
 
     const track = (eventName: string, description: string = ""): void => {
         const payload: AnalyticsPayload = {
-            visitorId: crypto.randomUUID(),
+            visitorId: getVisitorId(),
             url: window.location.href,
             referrer: document.referrer || "direct",
             siteId: siteId,
@@ -24,13 +41,14 @@ interface AnalyticsPayload {
             description: description
         };
 
-        fetch(endpoint, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-            mode: 'cors'
-        }).catch(err => console.error("Flowstate Error:", err));
+        sendData(payload);
     };
+
+    window.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') {
+            track("exit", "User left the page or closed tab");
+        }
+    });
 
     track("page_view", "Initial page load");
 
