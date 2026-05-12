@@ -62,3 +62,5 @@ application.properties
 src/main/resources/application.properties
 src/main/resources/application-dev.properties
 src/main/resources/keystore.p12
+ui/package-lock.json
+package-lock.json
