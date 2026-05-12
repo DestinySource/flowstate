@@ -6,6 +6,8 @@ import io.DestinySource.Flowstate.model.Analytics;
 import io.DestinySource.Flowstate.repository.AnalyticsRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,6 +36,20 @@ public class AnalyticsService {
 
     @Transactional
     public AnalyticsDTO saveEvent(AnalyticsDTO dto) {
+        LocalDateTime threshold = LocalDateTime.now().minusMinutes(5);
+
+        if ("page_view".equals(dto.eventName())){
+            boolean exists = repository.existsByVisitorIdAndEventNameAndUrlAndCreatedAtAfter(
+                    dto.visitorId(),
+                    dto.eventName(),
+                    dto.url(),
+                    threshold
+            );
+            if (exists) {
+                return dto;
+            }
+        }
+
         Analytics entity = new Analytics();
         entity.setVisitorId(dto.visitorId());
         entity.setUrl(dto.url());
@@ -41,6 +57,7 @@ public class AnalyticsService {
         entity.setSiteId(dto.siteId());
         entity.setEventName(dto.eventName());
         entity.setDescription(dto.description());
+
         return mapToDTO(repository.save(entity));
     }
 

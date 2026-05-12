@@ -12,10 +12,10 @@
 - [x] **Dag 5:** Postman Testing. Alle mogelijke foutmeldingen testen (lege data, foute JSON).
 
 ### De Tracker Script (JS/TS)
-- [ ] **Dag 6:** Het "Pixel" Concept. Een simpel script maken dat op elke site kan draaien.
-- [ ] **Dag 7:** Auto-capture. Script uitbreiden om automatisch `window.location` te pakken.
-- [ ] **Dag 8:** Referrer Tracking. Vastleggen van welke site de bezoeker komt (`document.referrer`).
-- [ ] **Dag 9:** Browser Fingerprinting. Anonieme ID's genereren zonder cookies (privacy-first).
+- [x] **Dag 6:** Het "Pixel" Concept. Een simpel script maken dat op elke site kan draaien.
+- [x] **Dag 7:** Auto-capture. Script uitbreiden om automatisch `window.location` te pakken.
+- [x] **Dag 8:** Referrer Tracking. Vastleggen van welke site de bezoeker komt (`document.referrer`).
+- [x] **Dag 9:** Browser Fingerprinting. Anonieme ID's genereren zonder cookies (privacy-first).
 - [ ] **Dag 10:** Minificatie. Je script verkleinen (minify) zodat het supersnel laadt.
 
 ### De Eerste Visualisaties

@@ -1,5 +1,3 @@
-import {createBlock} from "vue";
-
 interface AnalyticsPayload {
     visitorId: string | null;
     url: string;
