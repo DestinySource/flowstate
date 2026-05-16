@@ -1,10 +1,8 @@
 package io.DestinySource.Flowstate.controller;
 
-import io.DestinySource.Flowstate.dto.AnalyticsDTO;
-import io.DestinySource.Flowstate.model.Analytics;
-import io.DestinySource.Flowstate.repository.AnalyticsRepository;
+import io.DestinySource.Flowstate.dto.AnalyticsRequestDTO;
+import io.DestinySource.Flowstate.dto.AnalyticsResponseDTO;
 import io.DestinySource.Flowstate.service.AnalyticsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,16 +19,16 @@ public class AnalyticsController {
     }
 
     @GetMapping
-    public List<AnalyticsDTO> getAll() {
+    public List<AnalyticsResponseDTO> getAll() {
         return service.getAllEvents();
     }
 
     @PostMapping
-    public AnalyticsDTO create(@RequestBody AnalyticsDTO dto) {
+    public AnalyticsResponseDTO create(@RequestBody AnalyticsRequestDTO dto) {
         return service.saveEvent(dto);
     }
     @GetMapping("/{id}")
-    public AnalyticsDTO getById(@PathVariable Long id) {
+    public AnalyticsResponseDTO getById(@PathVariable Long id) {
         return service.getEventById(id);
     }
     @GetMapping("/status")

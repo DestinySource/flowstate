@@ -19,7 +19,7 @@
 - [ ] **Dag 10:** Minificatie. Je script verkleinen (minify) zodat het supersnel laadt.
 
 ### De Eerste Visualisaties
-- [ ] **Dag 11:** Vue-API Connectie. Axios instellen in Vue om data uit Java te trekken.
+- [ ] **Dag 11:** Vue-API Connectie. fetch in Vue om data uit Java te trekken.
 - [ ] **Dag 12:** Dashboard Layout. De basis Grid-structuur met Tailwind CSS.
 - [ ] **Dag 13:** The Counter Card. Een component dat het totaal aantal hits laat zien.
 - [ ] **Dag 14:** Date Range Logic. Backend queries schrijven voor "Vandaag" vs "Gisteren".

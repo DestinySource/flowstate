@@ -42,11 +42,11 @@ interface AnalyticsPayload {
         sendData(payload);
     };
 
-    window.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'hidden') {
-            track("exit", "User left the page or closed tab");
-        }
-    });
+    // window.addEventListener('visibilitychange', () => {
+    //     if (document.visibilityState === 'hidden') {
+    //         track("exit", "User left the page or closed tab");
+    //     }
+    // });
 
     track("page_view", "Initial page load");
 
@@ -59,14 +59,14 @@ interface AnalyticsPayload {
     });
     observer.observe(document, { subtree: true, childList: true });
 
-    document.addEventListener('click', (e) => {
-        const target = e.target as HTMLElement;
-        const clickable = target.closest('button, a');
-        if (clickable) {
-            const label = clickable.textContent?.trim().substring(0, 30) || "unnamed";
-            track("click", `Interacted with: ${label}`);
-        }
-    });
+    // document.addEventListener('click', (e) => {
+    //     const target = e.target as HTMLElement;
+    //     const clickable = target.closest('button, a');
+    //     if (clickable) {
+    //         const label = clickable.textContent?.trim().substring(0, 30) || "unnamed";
+    //         track("click", `Interacted with: ${label}`);
+    //     }
+    // });
 
     (window as any).flowstate = { track };
 })();

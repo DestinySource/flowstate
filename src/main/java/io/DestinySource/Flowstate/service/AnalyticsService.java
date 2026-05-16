@@ -1,6 +1,7 @@
 package io.DestinySource.Flowstate.service;
 
-import io.DestinySource.Flowstate.dto.AnalyticsDTO;
+import io.DestinySource.Flowstate.dto.AnalyticsRequestDTO;
+import io.DestinySource.Flowstate.dto.AnalyticsResponseDTO;
 import io.DestinySource.Flowstate.exception.FlowstateExceptions;
 import io.DestinySource.Flowstate.model.Analytics;
 import io.DestinySource.Flowstate.repository.AnalyticsRepository;
@@ -21,21 +22,21 @@ public class AnalyticsService {
     }
 
     @Transactional(readOnly = true)
-    public List<AnalyticsDTO> getAllEvents() {
+    public List<AnalyticsResponseDTO> getAllEvents() {
         return repository.findAllByOrderByCreatedAtDesc().stream()
-                .map(this::mapToDTO)
+                .map(this::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public AnalyticsDTO getEventById(Long id) {
+    public AnalyticsResponseDTO getEventById(Long id) {
         Analytics entity = repository.findById(id)
                 .orElseThrow(() -> new FlowstateExceptions.ResourceNotFound("Event " + id + " niet gevonden."));
-        return mapToDTO(entity);
+        return mapToResponseDTO(entity);
     }
 
     @Transactional
-    public AnalyticsDTO saveEvent(AnalyticsDTO dto) {
+    public AnalyticsResponseDTO saveEvent(AnalyticsRequestDTO dto) {
         LocalDateTime threshold = LocalDateTime.now().minusMinutes(5);
 
         if ("page_view".equals(dto.eventName())){
@@ -46,7 +47,15 @@ public class AnalyticsService {
                     threshold
             );
             if (exists) {
-                return dto;
+                return new AnalyticsResponseDTO(
+                        dto.visitorId(),
+                        dto.url(),
+                        dto.referrer(),
+                        dto.siteId(),
+                        dto.eventName(),
+                        dto.description(),
+                        LocalDateTime.now()
+                );
             }
         }
 
@@ -58,12 +67,11 @@ public class AnalyticsService {
         entity.setEventName(dto.eventName());
         entity.setDescription(dto.description());
 
-        return mapToDTO(repository.save(entity));
+        return mapToResponseDTO(repository.save(entity));
     }
 
-    private AnalyticsDTO mapToDTO(Analytics entity) {
-        return new AnalyticsDTO(
-                entity.getId(),
+    private AnalyticsResponseDTO mapToResponseDTO(Analytics entity) {
+        return new AnalyticsResponseDTO(
                 entity.getVisitorId(),
                 entity.getUrl(),
                 entity.getReferrer(),
