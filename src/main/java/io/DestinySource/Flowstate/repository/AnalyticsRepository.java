@@ -10,6 +10,9 @@ import java.util.List;
 @Repository
 public interface AnalyticsRepository extends JpaRepository<Analytics, Long> {
     List<Analytics> findAllByOrderByCreatedAtDesc();
+
+    List<Analytics> findBySite_SiteUrl(String siteUrl);
+
     boolean existsByVisitorIdAndEventNameAndUrlAndCreatedAtAfter(
             String visitorId,
             String eventName,

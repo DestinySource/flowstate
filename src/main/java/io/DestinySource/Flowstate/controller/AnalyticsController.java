@@ -22,7 +22,10 @@ public class AnalyticsController {
     public List<AnalyticsResponseDTO> getAll() {
         return service.getAllEvents();
     }
-
+    @GetMapping("/site")
+    public List<AnalyticsResponseDTO> getBySiteUrl(@RequestParam String url) {
+        return service.getEventsBySiteUrl(url);
+    }
     @PostMapping
     public AnalyticsResponseDTO create(@RequestBody AnalyticsRequestDTO dto) {
         return service.saveEvent(dto);

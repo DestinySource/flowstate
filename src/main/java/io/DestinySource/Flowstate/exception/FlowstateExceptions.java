@@ -12,6 +12,11 @@ public class FlowstateExceptions {
         }
     }
 
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public static class UnauthorizedException extends RuntimeException {
+        public UnauthorizedException(String message) { super(message); }
+    }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public static class BadRequest extends RuntimeException {
         public BadRequest(String message) {

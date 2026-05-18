@@ -4,7 +4,9 @@ import io.DestinySource.Flowstate.dto.AnalyticsRequestDTO;
 import io.DestinySource.Flowstate.dto.AnalyticsResponseDTO;
 import io.DestinySource.Flowstate.exception.FlowstateExceptions;
 import io.DestinySource.Flowstate.model.Analytics;
+import io.DestinySource.Flowstate.model.Site;
 import io.DestinySource.Flowstate.repository.AnalyticsRepository;
+import io.DestinySource.Flowstate.repository.SiteRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,9 +18,11 @@ import java.util.stream.Collectors;
 public class AnalyticsService {
 
     private final AnalyticsRepository repository;
+    private final SiteRepository siteRepository;
 
-    public AnalyticsService(AnalyticsRepository repository) {
+    public AnalyticsService(AnalyticsRepository repository, SiteRepository siteRepository) {
         this.repository = repository;
+        this.siteRepository = siteRepository;
     }
 
     @Transactional(readOnly = true)
@@ -35,8 +39,24 @@ public class AnalyticsService {
         return mapToResponseDTO(entity);
     }
 
+    @Transactional(readOnly = true)
+    public List<AnalyticsResponseDTO> getEventsBySiteUrl(String siteUrl) {
+        return repository.findBySite_SiteUrl(siteUrl).stream()
+                .map(this::mapToResponseDTO)
+                .collect(Collectors.toList());
+    }
+
     @Transactional
     public AnalyticsResponseDTO saveEvent(AnalyticsRequestDTO dto) {
+        // 1. Find the site using the identifier from your request DTO (assuming dto.siteId() holds the site url string)
+        Site site = siteRepository.findBySiteUrl(dto.siteId())
+                .orElseThrow(() -> new FlowstateExceptions.ResourceNotFound("Site " + dto.siteId() + " niet gevonden."));
+
+        // 2. Security validation: Stop unverified platforms from logging records
+        if (!site.isVerified()) {
+            throw new FlowstateExceptions.UnauthorizedException("Kan data niet loggen. Site is niet geverifieerd.");
+        }
+
         LocalDateTime threshold = LocalDateTime.now().minusMinutes(5);
 
         if ("page_view".equals(dto.eventName())){
@@ -51,7 +71,7 @@ public class AnalyticsService {
                         dto.visitorId(),
                         dto.url(),
                         dto.referrer(),
-                        dto.siteId(),
+                        site.getSiteUrl(),
                         dto.eventName(),
                         dto.description(),
                         LocalDateTime.now()
@@ -63,7 +83,7 @@ public class AnalyticsService {
         entity.setVisitorId(dto.visitorId());
         entity.setUrl(dto.url());
         entity.setReferrer(dto.referrer());
-        entity.setSiteId(dto.siteId());
+        entity.setSite(site);
         entity.setEventName(dto.eventName());
         entity.setDescription(dto.description());
 
@@ -71,11 +91,13 @@ public class AnalyticsService {
     }
 
     private AnalyticsResponseDTO mapToResponseDTO(Analytics entity) {
+        String siteIdentifier = (entity.getSite() != null) ? entity.getSite().getSiteUrl() : null;
+
         return new AnalyticsResponseDTO(
                 entity.getVisitorId(),
                 entity.getUrl(),
                 entity.getReferrer(),
-                entity.getSiteId(),
+                siteIdentifier,
                 entity.getEventName(),
                 entity.getDescription(),
                 entity.getCreatedAt()

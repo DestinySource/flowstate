@@ -16,7 +16,12 @@ public class Analytics {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "visitor_id")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "siteId", referencedColumnName = "id", nullable = false)
+    private Site site;
+
+    @Column(name = "visitorId")
     private String visitorId;
 
     @Column(name = "url")
@@ -24,9 +29,6 @@ public class Analytics {
 
     @Column(name = "referrer")
     private String referrer;
-
-    @Column(name = "site_id")
-    private String siteId;
 
     @Column(name = "event_name")
     private String eventName;
