@@ -40,8 +40,8 @@ public class AnalyticsService {
     }
 
     @Transactional(readOnly = true)
-    public List<AnalyticsResponseDTO> getEventsBySiteUrl(String siteUrl) {
-        return repository.findBySite_SiteUrl(siteUrl).stream()
+    public List<AnalyticsResponseDTO> getEventsBySiteUrl(String siteHost) {
+        return repository.findBySite_SiteHost(siteHost).stream()
                 .map(this::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
@@ -49,7 +49,7 @@ public class AnalyticsService {
     @Transactional
     public AnalyticsResponseDTO saveEvent(AnalyticsRequestDTO dto) {
         // 1. Find the site using the identifier from your request DTO (assuming dto.siteId() holds the site url string)
-        Site site = siteRepository.findBySiteUrl(dto.siteId())
+        Site site = siteRepository.findBySiteHost(dto.siteId())
                 .orElseThrow(() -> new FlowstateExceptions.ResourceNotFound("Site " + dto.siteId() + " niet gevonden."));
 
         // 2. Security validation: Stop unverified platforms from logging records
@@ -60,18 +60,18 @@ public class AnalyticsService {
         LocalDateTime threshold = LocalDateTime.now().minusMinutes(5);
 
         if ("page_view".equals(dto.eventName())){
-            boolean exists = repository.existsByVisitorIdAndEventNameAndUrlAndCreatedAtAfter(
+            boolean exists = repository.existsByVisitorIdAndEventNameAndPathAndCreatedAtAfter(
                     dto.visitorId(),
                     dto.eventName(),
-                    dto.url(),
+                    dto.path(),
                     threshold
             );
             if (exists) {
                 return new AnalyticsResponseDTO(
                         dto.visitorId(),
-                        dto.url(),
+                        dto.path(),
                         dto.referrer(),
-                        site.getSiteUrl(),
+                        site.getSiteHost(),
                         dto.eventName(),
                         dto.description(),
                         LocalDateTime.now()
@@ -81,7 +81,7 @@ public class AnalyticsService {
 
         Analytics entity = new Analytics();
         entity.setVisitorId(dto.visitorId());
-        entity.setUrl(dto.url());
+        entity.setPath(dto.path());
         entity.setReferrer(dto.referrer());
         entity.setSite(site);
         entity.setEventName(dto.eventName());
@@ -91,11 +91,11 @@ public class AnalyticsService {
     }
 
     private AnalyticsResponseDTO mapToResponseDTO(Analytics entity) {
-        String siteIdentifier = (entity.getSite() != null) ? entity.getSite().getSiteUrl() : null;
+        String siteIdentifier = (entity.getSite() != null) ? entity.getSite().getSiteHost() : null;
 
         return new AnalyticsResponseDTO(
                 entity.getVisitorId(),
-                entity.getUrl(),
+                entity.getPath(),
                 entity.getReferrer(),
                 siteIdentifier,
                 entity.getEventName(),

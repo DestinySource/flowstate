@@ -7,5 +7,5 @@ import java.util.Optional;
 
 @Repository
 public interface SiteRepository extends JpaRepository<Site, Long> {
-    Optional<Site> findBySiteUrl(String siteUrl);
+    Optional<Site> findBySiteHost(String siteHost);
 }

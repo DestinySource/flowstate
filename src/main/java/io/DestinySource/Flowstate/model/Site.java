@@ -14,8 +14,8 @@
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
-        @Column(name = "siteUrl")
-        private String siteUrl;
+        @Column(name = "site_host", nullable = false)
+        private String siteHost;
 
         @Column(name = "unique_views")
         private Integer unique_views;
