@@ -4,7 +4,6 @@ import { motion } from 'motion-v'
 import HeroHeader from '@/components/HeroHeader.vue'
 import FeatureCard from '@/components/FeatureCard.vue'
 import ApiButton from "@/components/ApiButton.vue";
-import FeatureShowcaseCard from '@/components/FeatureShowcaseCard.vue'
 
 const showExtra = ref(false)
 const apiStatus = ref<'idle' | 'loading' | 'success' | 'error'>('idle')

@@ -1,6 +1,6 @@
 interface AnalyticsPayload {
     visitorId: string | null;
-    url: string;
+    path: string;
     referrer: string;
     siteId: string;
     eventName: string;
@@ -9,7 +9,7 @@ interface AnalyticsPayload {
 
 (function () {
     const scriptTag = document.querySelector('script[data-site-id]') as HTMLScriptElement;
-    const siteId: string = scriptTag?.getAttribute('data-site-id') || 'UNKNOWN';
+    const siteId: string = location.host;
     const endpoint: string = "https://localhost:8443/api/v1/analytics";
     const getVisitorId = () => localStorage.getItem("user_id") || "anonymous";
     console.log(`%c ⚡ Flowstate: Tracking actief voor ${siteId}`, "color: #42b883; font-weight: bold;");
@@ -32,7 +32,7 @@ interface AnalyticsPayload {
     const track = (eventName: string, description: string = ""): void => {
         const payload: AnalyticsPayload = {
             visitorId: getVisitorId(),
-            url: window.location.href,
+            path: location.pathname,
             referrer: document.referrer || "direct",
             siteId: siteId,
             eventName: eventName,
