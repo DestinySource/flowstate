@@ -24,8 +24,8 @@ public class Analytics {
     @Column(name = "visitorId")
     private String visitorId;
 
-    @Column(name = "url")
-    private String url;
+    @Column(name = "path")
+    private String path;
 
     @Column(name = "referrer")
     private String referrer;
