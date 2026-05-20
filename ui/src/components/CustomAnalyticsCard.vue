@@ -12,11 +12,24 @@ interface Props {
   id: string
   tabs: string[]
   cardData: Record<string, AnalyticsItem[]>
+  defaultCutoff?: string // Optionele prop voor initiële waarde
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  defaultCutoff: '7days'
+})
+
+const emit = defineEmits<{
+  (e: 'update:cutoff', value: string): void
+}>()
+
 const activeTab = ref<string>(props.tabs[0] || '')
 const isDescending = ref(true)
+const selectedCutoff = ref<string>(props.defaultCutoff)
+
+const handleCutoffChange = () => {
+  emit('update:cutoff', selectedCutoff.value)
+}
 
 const processedData = computed(() => {
   const rawGroup = props.cardData[activeTab.value]
@@ -48,13 +61,27 @@ const processedData = computed(() => {
         </button>
       </div>
 
-      <div class="sort-container">
-        <span class="label-caps">Unique Views</span>
-        <button @click="isDescending = !isDescending" class="sort-btn" title="Sorteervolgorde aanpassen">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" :class="['sort-icon', isDescending ? 'rotate-0' : 'rotate-180']">
-            <path fill-rule="evenodd" d="M13.78 10.47a.75.75 0 0 1 0 1.06l-2.25 2.25a.75.75 0 0 1-1.06 0l-2.25-2.25a.75.75 0 1 1 1.06-1.06l.97.97V5.75a.75.75 0 0 1 1.5 0v5.69l.97-.97a.75.75 0 0 1 1.06 0ZM2.22 5.53a.75.75 0 0 1 0-1.06l2.25-2.25a.75.75 0 0 1-1.06 0l2.25 2.25a.75.75 0 0 1-1.06 1.06l-.97-.97v5.69a.75.75 0 0 1-1.5 0V4.56l-.97.97a.75.75 0 0 1-1.06 0Z" clip-rule="evenodd"></path>
-          </svg>
-        </button>
+      <div class="controls-wrapper">
+        <div class="select-container">
+          <select
+              v-model="selectedCutoff"
+              @change="handleCutoffChange"
+              class="cutoff-select"
+          >
+            <option value="24hours">24_HOURS</option>
+            <option value="7days">7_DAYS</option>
+            <option value="30days">30_DAYS</option>
+          </select>
+        </div>
+
+        <div class="sort-container">
+          <span class="label-caps">Unique Views</span>
+          <button @click="isDescending = !isDescending" class="sort-btn" title="Sorteervolgorde aanpassen">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" :class="['sort-icon', isDescending ? 'rotate-0' : 'rotate-180']">
+              <path fill-rule="evenodd" d="M13.78 10.47a.75.75 0 0 1 0 1.06l-2.25 2.25a.75.75 0 0 1-1.06 0l-2.25-2.25a.75.75 0 1 1 1.06-1.06l.97.97V5.75a.75.75 0 0 1 1.5 0v5.69l.97-.97a.75.75 0 0 1 1.06 0ZM2.22 5.53a.75.75 0 0 1 0-1.06l2.25-2.25a.75.75 0 0 1-1.06 0l2.25 2.25a.75.75 0 0 1-1.06 1.06l-.97-.97v5.69a.75.75 0 0 1-1.5 0V4.56l-.97.97a.75.75 0 0 1-1.06 0Z" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -90,16 +117,13 @@ const processedData = computed(() => {
 </template>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap');
-
 .motion-v-card {
-  background: rgba(22, 22, 26, 0.8);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid #2a2a30;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--outline);
   border-radius: 4px;
   overflow: hidden;
-  font-family: 'Inter', sans-serif;
 }
 
 .card-header {
@@ -107,7 +131,7 @@ const processedData = computed(() => {
   align-items: center;
   justify-content: space-between;
   padding: 16px 24px;
-  border-b: 1px solid #2a2a30;
+  border-bottom: 1px solid var(--outline);
   background: rgba(14, 14, 18, 0.4);
 }
 
@@ -117,7 +141,7 @@ const processedData = computed(() => {
 }
 
 .tab-btn {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-heading);
   font-size: 14px;
   font-weight: 500;
   text-transform: capitalize;
@@ -125,21 +149,69 @@ const processedData = computed(() => {
   border: none;
   padding: 6px 16px;
   cursor: pointer;
-  color: #94949e;
+  color: var(--on-surface-dim);
   border-radius: 4px;
   transition: all 0.2s ease;
 }
 
 .tab-active {
-  color: #ffffff;
+  color: var(--on-surface-bright);
   background: rgba(255, 45, 120, 0.15);
   border: 1px solid rgba(255, 45, 120, 0.4);
   box-shadow: 0 0 10px rgba(255, 45, 120, 0.1);
 }
 
 .tab-btn:hover:not(.tab-active) {
-  color: #e4e1e7;
+  color: var(--on-surface);
   background: rgba(255, 255, 255, 0.05);
+}
+
+.controls-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.select-container {
+  position: relative;
+}
+
+.cutoff-select {
+  background-color: #141418;
+  color: var(--secondary, #00f0ff);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  padding: 4px 28px 4px 10px;
+  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: all 0.2s ease;
+}
+
+.select-container::after {
+  content: '▼';
+  font-size: 8px;
+  color: var(--secondary, #00f0ff);
+  right: 10px;
+  top: 9px;
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.cutoff-select:hover, .cutoff-select:focus {
+  border-color: var(--secondary, #00f0ff);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.15);
+}
+
+.cutoff-select option {
+  background: #141418;
+  color: var(--on-surface, #e4e1e7);
 }
 
 .sort-container {
@@ -149,18 +221,18 @@ const processedData = computed(() => {
 }
 
 .label-caps {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-heading);
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #94949e;
+  color: var(--on-surface-dim);
 }
 
 .sort-btn {
   background: transparent;
   border: none;
-  color: #94949e;
+  color: var(--on-surface-dim);
   cursor: pointer;
   padding: 4px;
   display: flex;
@@ -170,7 +242,7 @@ const processedData = computed(() => {
 }
 
 .sort-btn:hover {
-  color: #ff71a4;
+  color: var(--secondary);
 }
 
 .sort-icon {
@@ -205,7 +277,7 @@ const processedData = computed(() => {
   top: 0;
   bottom: 0;
   background: linear-gradient(90deg, rgba(255, 45, 120, 0.05) 0%, rgba(255, 45, 120, 0.2) 100%);
-  border-right: 2px solid #ff2d78;
+  border-right: 2px solid var(--primary);
   box-shadow: inset -5px 0 10px rgba(255, 45, 120, 0.2), 0 0 12px rgba(255, 45, 120, 0.2);
   transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 0;
@@ -225,12 +297,12 @@ const processedData = computed(() => {
   display: flex;
   align-items: center;
   gap: 8px;
-  min-w: 0;
+  min-width: 0;
 }
 
 .path-prefix {
-  font-family: 'Space Grotesk', sans-serif;
-  color: #ff71a4;
+  font-family: var(--font-heading);
+  color: var(--secondary);
   font-weight: 700;
   user-select: none;
 }
@@ -239,25 +311,25 @@ const processedData = computed(() => {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background-color: #00f0ff;
-  box-shadow: 0 0 6px #00f0ff;
+  background-color: var(--tertiary);
+  box-shadow: 0 0 6px var(--tertiary);
   flex-shrink: 0;
 }
 
 .data-name {
   font-size: 14px;
   font-weight: 400;
-  color: #e4e1e7;
+  color: var(--on-surface);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .mono-data {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-heading);
   font-size: 14px;
   font-weight: 500;
-  color: #ffffff;
+  color: var(--on-surface-bright);
   letter-spacing: 0.02em;
   padding-left: 8px;
 }

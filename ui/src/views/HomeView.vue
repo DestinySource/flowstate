@@ -8,6 +8,9 @@ import ApiButton from "@/components/ApiButton.vue";
 const showExtra = ref(false)
 const apiStatus = ref<'idle' | 'loading' | 'success' | 'error'>('idle')
 
+const siteId: string = location.host;
+const getVisitorId = () => localStorage.getItem("user_id") || "anonymous";
+
 const features = [
   { id: 1, title: 'Hardware Accelerated', icon: '🚀' },
   { id: 2, title: 'App-like Gestures', icon: '📱' },
@@ -21,10 +24,12 @@ const showcaseFeatures = [
 ]
 
 const analyticsPayload = {
-  eventName: "home_visit",
-  url: window.location.href,
-  siteId: "FLOW-DEV-001",
-  visitorId: "user-123"
+  visitorId: getVisitorId(),
+  path: location.pathname,
+  referrer: document.referrer || "direct",
+  siteId: siteId,
+  eventName: "button_click",
+  description: "Er is geklikt op de knop!"
 }
 
 async function handleApiCall() {
@@ -69,15 +74,6 @@ async function handleApiCall() {
 
       <div class="stitch-divider"></div>
     </section>
-
-<!--    <section class="showcase-grid">-->
-<!--      <FeatureShowcaseCard-->
-<!--          v-for="(item, index) in showcaseFeatures"-->
-<!--          :key="item.id"-->
-<!--          v-bind="item"-->
-<!--          :index="index"-->
-<!--      />-->
-<!--    </section>-->
 
     <section class="grid-container">
       <FeatureCard
@@ -176,7 +172,7 @@ button {
 
 .api-hint {
   font-size: 0.85rem;
-  color: #10b981; /* Groen */
+  color: #10b981;
   font-weight: 500;
 }
 

@@ -10,14 +10,14 @@ const dashboardData = ref({
 const isLoading = ref(true)
 const errorMessage = ref('')
 const currentHost = ref(window.location.host)
+const currentCutoff = ref('7days')
 
 const fetchDashboardStats = async () => {
   try {
     isLoading.value = true
     errorMessage.value = ''
 
-    const response = await fetch(`https://localhost:8443/api/dashboard/stats?host=${currentHost.value}`)
-
+    const response = await fetch(`https://localhost:8443/api/dashboard/stats?host=${currentHost.value}&cutOff=${currentCutoff.value}`)
     if (!response.ok) {
       errorMessage.value = await response.text()
       return
@@ -70,6 +70,8 @@ onMounted(() => {
             id="Source"
             :tabs="['hostname', 'pages']"
             :cardData="dashboardData"
+            :defaultCutoff="currentCutoff"
+            @update:cutoff="(newValue) => { currentCutoff = newValue; fetchDashboardStats(); }"
         />
       </main>
 

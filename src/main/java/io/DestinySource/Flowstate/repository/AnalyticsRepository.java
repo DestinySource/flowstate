@@ -32,6 +32,10 @@ public interface AnalyticsRepository extends JpaRepository<Analytics, Long> {
     @Query("SELECT a.path AS name, COUNT(DISTINCT a.visitorId) AS uv " +
             "FROM Analytics a " +
             "WHERE a.site.siteHost = :siteHost " +
+            "AND a.createdAt >= :cutOffDate " +
             "GROUP BY a.path")
-    List<AnalyticsItemProjection> getStatsByPages(@Param("siteHost") String siteHost);
+    List<AnalyticsItemProjection> getStatsByPages(
+            @Param("siteHost") String siteHost,
+            @Param("cutOffDate") LocalDateTime cutOffDate
+    );
 }

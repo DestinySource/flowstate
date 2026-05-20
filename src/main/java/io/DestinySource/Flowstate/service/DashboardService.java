@@ -8,6 +8,7 @@ import io.DestinySource.Flowstate.repository.SiteRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,7 @@ public class DashboardService {
     }
 
     @Transactional(readOnly = true)
-    public Map<String, List<AnalyticsItemProjection>> getDashboardStats(String host) {
+    public Map<String, List<AnalyticsItemProjection>> getDashboardStats(String host, String cutOff) {
         Site site = siteRepository.findBySiteHost(host)
                 .orElseThrow(() -> new FlowstateExceptions.ResourceNotFound("Host '" + host + "' niet gevonden."));
 
@@ -32,10 +33,21 @@ public class DashboardService {
             throw new FlowstateExceptions.UnauthorizedException("Kan data niet ophalen. Site is niet geverifieerd.");
         }
 
+        LocalDateTime cutOffDate = calculateCutOffDate(cutOff);
+
         Map<String, List<AnalyticsItemProjection>> dashboardData = new HashMap<>();
         dashboardData.put("hostname", analyticsRepository.getStatsByHostname(host));
-        dashboardData.put("pages", analyticsRepository.getStatsByPages(host));
+
+        dashboardData.put("pages", analyticsRepository.getStatsByPages(host, cutOffDate));
 
         return dashboardData;
+    }
+
+    private LocalDateTime calculateCutOffDate(String cutOff) {
+        return switch (cutOff.toLowerCase()) {
+            case "24hours" -> LocalDateTime.now().minusDays(1);
+            case "30days" -> LocalDateTime.now().minusDays(30);
+            default -> LocalDateTime.now().minusDays(7);
+        };
     }
 }

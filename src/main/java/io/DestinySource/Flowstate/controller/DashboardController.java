@@ -21,16 +21,22 @@ public class DashboardController {
     }
 
     @GetMapping("/stats")
-    public ResponseEntity<?> getStats(@RequestParam String host) {
+    public ResponseEntity<?> getStats(
+            @RequestParam("host") String host,
+            @RequestParam("cutOff") String cutOff) {
         try {
-            Map<String, List<AnalyticsItemProjection>> stats = dashboardService.getDashboardStats(host);
-            return ResponseEntity.ok(stats);
+            Map<String, List<AnalyticsItemProjection>> response = dashboardService.getDashboardStats(host, cutOff);
+            return ResponseEntity.ok(response);
+
         } catch (FlowstateExceptions.ResourceNotFound e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+
         } catch (FlowstateExceptions.UnauthorizedException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Er is een interne fout opgetreden.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Er is een interne fout opgetreden bij het ophalen van de statistieken.");
         }
     }
 }
