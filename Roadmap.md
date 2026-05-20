@@ -19,14 +19,14 @@
 - [ ] **Dag 10:** Minificatie. Je script verkleinen (minify) zodat het supersnel laadt.
 
 ### De Eerste Visualisaties
-- [ ] **Dag 11:** Vue-API Connectie. fetch in Vue om data uit Java te trekken.
-- [ ] **Dag 12:** Dashboard Layout. De basis Grid-structuur met Tailwind CSS.
-- [ ] **Dag 13:** The Counter Card. Een component dat het totaal aantal hits laat zien.
-- [ ] **Dag 14:** Date Range Logic. Backend queries schrijven voor "Vandaag" vs "Gisteren".
+- [x] **Dag 11:** Vue-API Connectie. fetch in Vue om data uit Java te trekken.
+- [x] **Dag 12:** Dashboard Layout. De basis Grid-structuur met Tailwind CSS.
+- [x] **Dag 13:** The Counter Card. Een component dat het totaal aantal hits laat zien.
+- [x] **Dag 14:** Date Range Logic. Backend queries schrijven voor "Vandaag" vs "Gisteren".
 - [ ] **Dag 15:** Line Chart Intro. Je eerste grafiek (bijv. met Chart.js of Recharts).
 
 ### Verfijning & Security
-- [ ] **Dag 16:** Site ID Validatie. Alleen data accepteren van geregistreerde domeinen.
+- [x] **Dag 16:** Site ID Validatie. Alleen data accepteren van geregistreerde domeinen.
 - [ ] **Dag 17:** User Agent Parsing. Java library toevoegen om "Windows", "iPhone", etc. te herkennen.
 - [ ] **Dag 18:** Data Aggregatie. Hoe tel je 1 miljoen hits zonder dat je DB traag wordt? (Intro SQL aggregates).
 - [ ] **Dag 19:** Error Handling UI. Mooie meldingen in Vue als de backend offline is.
