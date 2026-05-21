@@ -9,5 +9,8 @@ public record AnalyticsResponseDTO(
         String referrer,
         String eventName,
         String description,
+        String browser,
+        String os,
+        String device,
         LocalDateTime createdAt
 ) {}

@@ -74,6 +74,9 @@ public class AnalyticsService {
                         site.getSiteHost(),
                         dto.eventName(),
                         dto.description(),
+                        dto.browser(),
+                        dto.os(),
+                        dto.device(),
                         LocalDateTime.now()
                 );
             }
@@ -86,7 +89,9 @@ public class AnalyticsService {
         entity.setSite(site);
         entity.setEventName(dto.eventName());
         entity.setDescription(dto.description());
-
+        entity.setBrowser(dto.browser());
+        entity.setOs(dto.os());
+        entity.setDevice(dto.device());
         return mapToResponseDTO(repository.save(entity));
     }
 
@@ -100,6 +105,9 @@ public class AnalyticsService {
                 siteIdentifier,
                 entity.getEventName(),
                 entity.getDescription(),
+                entity.getBrowser(),
+                entity.getOs(),
+                entity.getDevice(),
                 entity.getCreatedAt()
         );
     }

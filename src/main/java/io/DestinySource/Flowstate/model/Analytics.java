@@ -36,6 +36,18 @@ public class Analytics {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "browser")
+    private String browser;
+
+    @Column(name = "os")
+    private String os;
+
+    @Column(name = "device")
+    private String device;
+
+    @Column(name = "duration_seconds")
+    private Long durationSeconds;
+
     @CreationTimestamp
     @Column(updatable = false, nullable = false)
     private LocalDateTime createdAt;

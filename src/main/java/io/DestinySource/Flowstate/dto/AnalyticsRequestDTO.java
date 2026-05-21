@@ -6,5 +6,8 @@ public record AnalyticsRequestDTO(
         String path,
         String referrer,
         String eventName,
-        String description
+        String description,
+        String browser,
+        String os,
+        String device
 ) {}
