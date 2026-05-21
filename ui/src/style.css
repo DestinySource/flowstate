@@ -24,8 +24,9 @@
   --glass-blur: blur(12px);
 
   /* Typography */
-  --font-heading: 'Space Grotesk', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-heading: 'Space Grotesk', serif;
+  --font-body: 'Inter', serif;
+  --generic: serif;
 }
 
 /* Base Reset & Setup */
@@ -33,7 +34,7 @@ body {
   margin: 0;
   background-color: var(--bg);
   color: var(--on-surface);
-  font-family: var(--font-body);
+  font-family: var(--font-body), sans-serif;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
@@ -51,7 +52,7 @@ body {
 
 /* Base Typography Layouts (Classes Only) */
 .text-h1 {
-  font-family: var(--font-heading);
+  font-family: var(--font-heading), sans-serif;
   color: var(--on-surface-bright);
   font-size: 48px;
   font-weight: 700;
@@ -62,7 +63,7 @@ body {
 }
 
 .text-h2 {
-  font-family: var(--font-heading);
+  font-family: var(--font-heading), sans-serif;
   color: var(--on-surface-bright);
   font-size: 32px;
   font-weight: 600;
@@ -99,7 +100,7 @@ body {
 
 /* High Velocity Action Buttons (Niet globaal op alle buttons!) */
 .stitch-btn {
-  font-family: var(--font-heading);
+  font-family: var(--font-heading), sans-serif;
   background: var(--primary);
   color: var(--on-surface-bright);
   text-transform: uppercase;
@@ -131,7 +132,7 @@ body {
   left: 32px;
   background: var(--bg);
   padding: 0 8px;
-  font-family: var(--font-heading);
+  font-family: var(--font-heading), sans-serif;
   font-size: 10px;
   color: var(--primary);
   letter-spacing: 0.2em;
@@ -164,7 +165,7 @@ body {
 }
 
 .dashboard-title {
-  font-family: var(--font-heading);
+  font-family: var(--font-heading), sans-serif;
   font-size: 32px;
   font-weight: 700;
   line-height: 1.1;
@@ -174,7 +175,7 @@ body {
 }
 
 .dashboard-subtitle {
-  font-family: var(--font-heading);
+  font-family: var(--font-heading), sans-serif;
   font-size: 14px;
   color: var(--on-surface-dim);
   margin: 6px 0 0 0;
@@ -188,7 +189,7 @@ body {
 }
 
 .pulse-connection {
-  font-family: var(--font-heading);
+  font-family: var(--font-heading), sans-serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -197,7 +198,7 @@ body {
 }
 
 .badge-online {
-  font-family: var(--font-heading);
+  font-family: var(--font-heading), sans-serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -236,7 +237,7 @@ body {
   border: 1px solid #93000a;
   border-radius: 4px;
   padding: 24px;
-  font-family: var(--font-heading);
+  font-family: var(--font-heading), sans-serif;
   box-shadow: 0 0 20px rgba(147, 0, 10, 0.15);
 }
 
@@ -248,7 +249,7 @@ body {
 }
 
 .alert-message {
-  font-family: var(--font-body);
+  font-family: var(--font-body), sans-serif;
   font-size: 15px;
   color: var(--on-surface);
   margin: 12px 0;
@@ -285,7 +286,7 @@ body {
 }
 
 .analytics-tab-btn {
-  font-family: var(--font-heading);
+  font-family: var(--font-heading), sans-serif;
   font-size: 14px;
   font-weight: 500;
   text-transform: capitalize;
@@ -325,7 +326,7 @@ body {
   color: var(--tertiary); /* Fixed: Was wrong variable */
   border: 1px solid rgba(0, 240, 255, 0.2);
   padding: 4px 28px 4px 10px;
-  font-family: var(--font-heading);
+  font-family: var(--font-heading), sans-serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.05em;
@@ -365,7 +366,7 @@ body {
 }
 
 .label-caps {
-  font-family: var(--font-heading);
+  font-family: var(--font-heading), sans-serif;
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
@@ -449,7 +450,7 @@ body {
 }
 
 .analytics-path-prefix {
-  font-family: var(--font-heading);
+  font-family: var(--font-heading), sans-serif;
   color: var(--secondary);
   font-weight: 700;
   user-select: none;
@@ -474,7 +475,7 @@ body {
 }
 
 .analytics-mono-output {
-  font-family: var(--font-heading);
+  font-family: var(--font-heading), sans-serif;
   font-size: 14px;
   font-weight: 500;
   color: var(--on-surface-bright);
