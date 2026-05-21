@@ -42,7 +42,6 @@ onMounted(() => {
     <aside class="sidebar-display">
       <div class="sidebar-block brand-block">
         <div class="sidebar-logo">FLOWSTATE</div>
-        <div class="label-caps sidebar-admin-tag">SYS_ADMIN // ACC_01</div>
       </div>
 
       <nav class="sidebar-block sidebar-nav">
@@ -82,7 +81,7 @@ onMounted(() => {
 
         <header class="dashboard-header">
           <div>
-            <h1 class="dashboard-title">FLOWSTATE_ANALYTICS</h1>
+            <h1 class="dashboard-title">FLOWSTATE ANALYTICS</h1>
             <p class="dashboard-subtitle">
               ACTIVE_TARGET: <span class="text-neon-pink">{{ currentHost }}</span>
             </p>
@@ -90,19 +89,19 @@ onMounted(() => {
 
           <div class="status-indicator">
             <div v-if="isLoading" class="pulse-connection">
-              CONNECTING_TO_CORE...
+              CONNECTING
             </div>
             <div v-else-if="!errorMessage" class="badge-online">
               <span class="badge-dot"></span>
-              CORE_ONLINE
+              ONLINE
             </div>
           </div>
         </header>
 
         <div v-if="errorMessage" class="alert-dispatch">
-          <span class="alert-title">[SECURITY DISPATCH ERROR]</span>
+          <span class="alert-title">ERROR</span>
           <p class="alert-message">{{ errorMessage }}</p>
-          <span class="alert-footer">SYSTEM_HALTED // CHECK_DB_VERIFICATION_STATUS</span>
+          <span class="alert-footer">Please contact a developer! We will try to fix this problem. And thank you for your help 🩷</span>
         </div>
 
         <main class="dashboard-grid">
