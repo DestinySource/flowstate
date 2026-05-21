@@ -48,11 +48,9 @@ public class AnalyticsService {
 
     @Transactional
     public AnalyticsResponseDTO saveEvent(AnalyticsRequestDTO dto) {
-        // 1. Find the site using the identifier from your request DTO (assuming dto.siteId() holds the site url string)
         Site site = siteRepository.findBySiteHost(dto.siteId())
                 .orElseThrow(() -> new FlowstateExceptions.ResourceNotFound("Site " + dto.siteId() + " niet gevonden."));
 
-        // 2. Security validation: Stop unverified platforms from logging records
         if (!site.isVerified()) {
             throw new FlowstateExceptions.UnauthorizedException("Kan data niet loggen. Site is niet geverifieerd.");
         }

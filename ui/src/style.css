@@ -50,6 +50,110 @@ body {
   min-height: 100vh;
 }
 
+.app-container {
+  display: flex;
+  width: 100vw;
+  min-height: 100vh;
+  background-color: var(--bg);
+}
+
+/* De Zijbalk exact volgens de rode schets */
+.sidebar-display {
+  width: 280px;
+  min-width: 280px;
+  background-color: #08080b; /* Iets dieper donker voor visuele gelaagdheid */
+  border-right: 2px solid var(--primary); /* De dikke harde rode lijn uit je screenshot */
+  display: flex;
+  flex-direction: column;
+  padding: 40px 24px;
+  box-sizing: border-box;
+}
+
+.brand-block {
+  margin-bottom: 32px;
+}
+
+.sidebar-logo {
+  font-family: var(--font-heading), sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--on-surface-bright);
+  margin-bottom: 6px;
+}
+
+.sidebar-admin-tag {
+  font-size: 10px !important;
+  color: var(--primary);
+  text-shadow: 0 0 8px var(--primary-glow);
+}
+
+.sidebar-block {
+  border-bottom: 1px solid var(--outline);
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar-link {
+  font-family: var(--font-heading), sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--on-surface-dim);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  padding: 10px 14px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.sidebar-link:hover {
+  color: var(--on-surface-bright);
+  background: var(--primary-glow);
+}
+
+/* Actieve status met subtiele indicator */
+.sidebar-link.is-active {
+  color: var(--on-surface-bright);
+  background: rgba(255, 45, 120, 0.08);
+  border-left: 2px solid var(--primary);
+}
+
+.sidebar-link-dot {
+  width: 4px;
+  height: 4px;
+  background-color: currentColor;
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+.sidebar-footer-block {
+  margin-top: auto;
+}
+
+/* Overschrijf/corrigeer de dashboard-view voor de flex-layout */
+.dashboard-view {
+  flex-grow: 1;
+  padding: 60px 80px; /* Geeft de kaart de ruimte om gecentreerd te ademen */
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+/* Zorgt ervoor dat de kaart de exacte breedte en centrering pakt uit je screenshot */
+.dashboard-container {
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
 /* Base Typography Layouts (Classes Only) */
 .text-h1 {
   font-family: var(--font-heading), sans-serif;
@@ -301,7 +405,7 @@ body {
 
 .analytics-tab-btn:hover:not(.is-active) {
   color: var(--on-surface);
-  background: var(--primary);
+  background: var(--primary-glow);
 }
 
 .analytics-tab-btn.is-active {
@@ -371,7 +475,7 @@ body {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--on-surface-dim);
+  color: var(--on-surface-bright);
 }
 
 .sort-trigger-btn {
