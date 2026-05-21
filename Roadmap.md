@@ -27,7 +27,7 @@
 
 ### Verfijning & Security
 - [x] **Dag 16:** Site ID Validatie. Alleen data accepteren van geregistreerde domeinen.
-- [ ] **Dag 17:** User Agent Parsing. Java library toevoegen om "Windows", "iPhone", etc. te herkennen.
+- [x] **Dag 17:** User Agent Parsing. Java library toevoegen om "Windows", "iPhone", etc. te herkennen.
 - [ ] **Dag 18:** Data Aggregatie. Hoe tel je 1 miljoen hits zonder dat je DB traag wordt? (Intro SQL aggregates).
 - [ ] **Dag 19:** Error Handling UI. Mooie meldingen in Vue als de backend offline is.
 - [ ] **Dag 20:** 🏁 **Eerste Milestone.** Een werkend prototype: Script op site A -> Data in Java -> Grafiek in Vue.
