@@ -9,7 +9,14 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "analytics")
+@Table(
+        name = "analytics",
+        indexes = {
+        @Index(name = "idx_analytics_site_date_path", columnList = "site_id, created_at, path"),
+
+        @Index(name = "idx_analytics_duplicate_check", columnList = "visitor_id, event_name, path, created_at")
+        }
+)
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class Analytics {
 
@@ -18,10 +25,10 @@ public class Analytics {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "siteId", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "site_id", referencedColumnName = "id", nullable = false)
     private Site site;
 
-    @Column(name = "visitorId")
+    @Column(name = "visitor_id")
     private String visitorId;
 
     @Column(name = "path")
@@ -49,10 +56,10 @@ public class Analytics {
     private Long durationSeconds;
 
     @CreationTimestamp
-    @Column(updatable = false, nullable = false)
+    @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
     @CreationTimestamp
-    @Column(nullable = false)
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 }
