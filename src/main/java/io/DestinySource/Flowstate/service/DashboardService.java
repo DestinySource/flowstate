@@ -1,7 +1,8 @@
 package io.DestinySource.Flowstate.service;
 
 import io.DestinySource.Flowstate.dto.AnalyticsItemProjection;
-import io.DestinySource.Flowstate.exception.FlowstateExceptions;
+import io.DestinySource.Flowstate.exception.ResourceNotFoundException;
+import io.DestinySource.Flowstate.exception.UnauthorizedException;
 import io.DestinySource.Flowstate.model.Site;
 import io.DestinySource.Flowstate.repository.AnalyticsRepository;
 import io.DestinySource.Flowstate.repository.SiteRepository;
@@ -27,10 +28,10 @@ public class DashboardService {
     @Transactional(readOnly = true)
     public Map<String, List<AnalyticsItemProjection>> getDashboardStats(String host, String cutOff) {
         Site site = siteRepository.findBySiteHost(host)
-                .orElseThrow(() -> new FlowstateExceptions.ResourceNotFound("Host '" + host + "' niet gevonden."));
+                .orElseThrow(() -> new ResourceNotFoundException("Host '" + host + "' niet gevonden."));
 
         if (!site.isVerified()) {
-            throw new FlowstateExceptions.UnauthorizedException("Kan data niet ophalen. Site is niet geverifieerd.");
+            throw new UnauthorizedException("Kan data niet ophalen. Site is niet geverifieerd.");
         }
 
         LocalDateTime cutOffDate = calculateCutOffDate(cutOff);
