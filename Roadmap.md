@@ -1,6 +1,6 @@
 # 🚀 Flowstate Analytics Roadmap (100 Dagen Plan)
 
-## Fase 1: De Core Engine (Dag 0 - 20)
+## Fase 1: De Core Engine (Dag 0 - 21)
 *Focus: Van een lege map naar een werkende data-pijplijn.*
 
 ### De Setup & Fundering
@@ -29,15 +29,16 @@
 - [x] **Dag 16:** Site ID Validatie. Alleen data accepteren van geregistreerde domeinen.
 - [x] **Dag 17:** User Agent Parsing. Java library toevoegen om "Windows", "iPhone", etc. te herkennen.
 - [x] **Dag 18:** Data Aggregatie. Hoe tel je 1 miljoen hits zonder dat je DB traag wordt? (Intro SQL aggregates).
-- [ ] **Dag 19:** Error Handling UI. Mooie meldingen in Vue als de backend offline is.
-- [ ] **Dag 20:** 🏁 **Eerste Milestone.** Een werkend prototype: Script op site A -> Data in Java -> Grafiek in Vue.
+- [x] **Dag 19:** Error Handling in the backend.
+- [ ] **Dag 20:** Error Handling UI improvements.
+- [ ] **Dag 21:** 🏁 **Eerste Milestone.** Een werkend prototype: Script op site A -> Data in Java -> Grafiek in Vue.
 
 ---
 
 ## Fase 2: De Professionalisering (Dag 21 - 50)
 *Focus: Authenticatie, meerdere websites beheren en performance.*
 
-- [ ] **Dag 21-30:** **Spring Security & JWT.** Zorg dat je kunt inloggen op je dashboard.
+- [ ] **Dag 22-30:** **Spring Security & JWT.** Zorg dat je kunt inloggen op je dashboard.
 - [ ] **Dag 31-40:** **Multi-tenancy.** Gebruikers kunnen meerdere websites toevoegen aan hun account.
 - [ ] **Dag 41-50:** **Geavanceerde Analytics.** "Time on Page" meten en "Bounce Rate" berekenen.
 
