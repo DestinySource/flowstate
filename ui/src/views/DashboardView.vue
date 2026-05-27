@@ -64,9 +64,6 @@ onMounted(() => {
           <span class="sidebar-link-dot"></span> VERIFICATION
         </a>
         <a href="#" class="sidebar-link">
-          <span class="sidebar-link-dot"></span> API_KEYS
-        </a>
-        <a href="#" class="sidebar-link">
           <span class="sidebar-link-dot"></span> LOGS
         </a>
       </nav>

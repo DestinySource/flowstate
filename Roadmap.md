@@ -30,7 +30,7 @@
 - [x] **Dag 17:** User Agent Parsing. Java library toevoegen om "Windows", "iPhone", etc. te herkennen.
 - [x] **Dag 18:** Data Aggregatie. Hoe tel je 1 miljoen hits zonder dat je DB traag wordt? (Intro SQL aggregates).
 - [x] **Dag 19:** Error Handling in the backend.
-- [ ] **Dag 20:** Error Handling UI improvements.
+- [x] **Dag 20:** Error Handling UI improvements.
 - [ ] **Dag 21:** 🏁 **Eerste Milestone.** Een werkend prototype: Script op site A -> Data in Java -> Grafiek in Vue.
 
 ---
