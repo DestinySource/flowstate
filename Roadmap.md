@@ -31,7 +31,7 @@
 - [x] **Dag 18:** Data Aggregatie. Hoe tel je 1 miljoen hits zonder dat je DB traag wordt? (Intro SQL aggregates).
 - [x] **Dag 19:** Error Handling in the backend.
 - [x] **Dag 20:** Error Handling UI improvements.
-- [ ] **Dag 21:** 🏁 **Eerste Milestone.** Een werkend prototype: Script op site A -> Data in Java -> Grafiek in Vue.
+- [x] **Dag 21:** 🏁 **Eerste Milestone.** Een werkend prototype: Script op site A -> Data in Java -> Grafiek in Vue.
 
 ---
 
@@ -41,7 +41,7 @@
 ### Spring Security & JWT (Dag 22 - 30)
 *Doel: Het dashboard beveiligen zodat alleen geautoriseerde gebruikers bij de data kunnen.*
 
-- [ ] **Dag 22:** **User Entity & DB.** Een `User` class aanmaken in Java met rollen (bijv. `ROLE_USER`) en de bijbehorende PostgreSQL-tabel opzetten.
+- [x] **Dag 22:** **User Entity & DB.** Een `User` class aanmaken in Java met rollen (bijv. `ROLE_USER`) en de bijbehorende PostgreSQL-tabel opzetten.
 - [ ] **Dag 23:** **Password Hashing.** BCrypt configureren in Spring Boot zodat wachtwoorden veilig (gehashed) in de database worden opgeslagen.
 - [ ] **Dag 24:** **Spring Security Fundering.** De security filter chain opzetten. Alle endpoints blokkeren behalve de publieke `/api/track` (deze moet openblijven voor je tracker script!).
 - [ ] **Dag 25:** **JWT Utilities.** Een Java utility class schrijven die JSON Web Tokens kan genereren, signeren en valideren.
