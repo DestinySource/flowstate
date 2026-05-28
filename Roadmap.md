@@ -35,13 +35,49 @@
 
 ---
 
-## Fase 2: De Professionalisering (Dag 21 - 50)
+## Fase 2: De Professionalisering (Dag 22 - 50)
 *Focus: Authenticatie, meerdere websites beheren en performance.*
 
-- [ ] **Dag 22-30:** **Spring Security & JWT.** Zorg dat je kunt inloggen op je dashboard.
-- [ ] **Dag 31-40:** **Multi-tenancy.** Gebruikers kunnen meerdere websites toevoegen aan hun account.
-- [ ] **Dag 41-50:** **Geavanceerde Analytics.** "Time on Page" meten en "Bounce Rate" berekenen.
+### Spring Security & JWT (Dag 22 - 30)
+*Doel: Het dashboard beveiligen zodat alleen geautoriseerde gebruikers bij de data kunnen.*
 
+- [ ] **Dag 22:** **User Entity & DB.** Een `User` class aanmaken in Java met rollen (bijv. `ROLE_USER`) en de bijbehorende PostgreSQL-tabel opzetten.
+- [ ] **Dag 23:** **Password Hashing.** BCrypt configureren in Spring Boot zodat wachtwoorden veilig (gehashed) in de database worden opgeslagen.
+- [ ] **Dag 24:** **Spring Security Fundering.** De security filter chain opzetten. Alle endpoints blokkeren behalve de publieke `/api/track` (deze moet openblijven voor je tracker script!).
+- [ ] **Dag 25:** **JWT Utilities.** Een Java utility class schrijven die JSON Web Tokens kan genereren, signeren en valideren.
+- [ ] **Dag 26:** **Login Endpoint.** Een `/api/auth/login` endpoint bouwen dat een geldige JWT token teruggeeft bij de juiste inloggegevens.
+- [ ] **Dag 27:** **JWT Authentication Filter.** Een filter bouwen dat bij elk dashboard-verzoek checkt of de meegeleverde JWT in de HTTP Authorization Header geldig is.
+- [ ] **Dag 28:** **Vue Auth Store.** Pinia store (of een composable) opzetten in Vue om de JWT-token en de ingelogde status van de gebruiker te beheren.
+- [ ] **Dag 29:** **Vue Login Interface.** Een strakke login-pagina bouwen in Vue met Tailwind CSS en deze succesvol koppelen aan het backend endpoint.
+- [ ] **Dag 30:** **Navigation Guards.** Vue Router zo instellen dat niet-ingelogde gebruikers automatisch naar de login-pagina worden omgeleid (Auth Middleware).
+
+### Multi-Tenancy & Website Beheer (Dag 31 - 40)
+*Doel: Zorgen dat één gebruiker meerdere websites kan tracken en de data strikt gescheiden blijft.*
+
+- [ ] **Dag 31:** **Website Entity.** Een `Website` class maken in Java (`id`, `name`, `domain`, `siteId`) met een `@ManyToOne` relatie naar de `User`.
+- [ ] **Dag 32:** **Website CRUD Backend.** Endpoints bouwen om een nieuwe website toe te voegen, op te halen of te verwijderen voor de ingelogde gebruiker.
+- [ ] **Dag 33:** **Data Isolatie Backend.** Je `/api/track` en analytics-endpoints aanpassen zodat ze filteren op de specifieke `site_id` én valideren of die site daadwerkelijk toebehoort aan de opgevraagde context.
+- [ ] **Dag 34:** **Vue Website Beheer UI.** Een pagina maken in je dashboard waar de gebruiker een overzicht ziet van zijn geregistreerde websites met een "Nieuwe site toevoegen" formulier.
+- [ ] **Dag 35:** **Site Switcher Component.** Een dropdown component maken in de bovenbalk van je Vue dashboard waarmee de gebruiker direct kan wisselen tussen de statistieken van verschillende websites.
+- [ ] **Dag 36:** **Dynamic Script Generator UI.** Een component maken dat de exacte tracking-code (inclusief de dynamische en unieke `data-site-id`) toont, zodat de gebruiker deze direct kan kopiëren.
+- [ ] **Dag 37:** **Empty State & Onboarding.** Een 'Get Started' view tonen in Vue wanneer een ingelogde gebruiker nog geen websites heeft geregistreerd.
+- [ ] **Dag 38:** **Database Unique Constraints.** Unieke indexen toevoegen in SQL zodat een specifiek domein niet dubbel geclaimd kan worden onder dezelfde gebruiker.
+- [ ] **Dag 39:** **Postman Edge-Case Testing.** Testen en valideren wat er gebeurt als Gebruiker A via de API data probeert op te vragen van een website van Gebruiker B (moet resulteren in een harde `403 Forbidden`).
+- [ ] **Dag 40:** **Refactor & Code Clean-up.** Backend en frontend opschonen, API-foutmeldingen in de UI netjes opvangen en ongebruikte imports verwijderen.
+
+### Geavanceerde Analytics (Dag 41 - 50)
+*Doel: Complexe engagement metrics berekenen zoals verblijfsduur en weigpercentage.*
+
+- [ ] **Dag 41:** **Tracker Upgrade: Heartbeat.** Het JavaScript-tracker script uitbreiden om elke 15 seconden een lichte 'ping' (heartbeat) naar de backend te sturen zolang de bezoeker de pagina actief open heeft.
+- [ ] **Dag 42:** **Session Tracking & Java Model.** Een sessie-id introduceeren in het script en een backend model/tabel opzetten om de starttijd en de meest recente heartbeat per sessie bij te houden.
+- [ ] **Dag 43:** **Time on Page SQL Query.** Een efficiënte SQL-query schrijven die het verschil tussen de starttijd en de laatste heartbeat berekent om de gemiddelde verblijfsduur (Average Time on Page) te bepalen.
+- [ ] **Dag 44:** **Bounce Rate Logica.** Een SQL-aggregatie schrijven om de Bounce Rate (weigpercentage) te berekenen: het percentage bezoekers dat slechts 1 pagina bekijkt en binnen een ingestelde tijd weer vertrekt.
+- [ ] **Dag 45:** **Top Pages Query.** Een query schrijven die de meest bezochte URL's groepeert, telt en sorteert op basis van het aantal hits voor een gekozen tijdsperiode.
+- [ ] **Dag 46:** **Vue Metrics Cards.** Drie nieuwe scorekaarten toevoegen bovenaan het Vue dashboard: "Gemiddelde Sessieduur", "Bounce Rate" en "Unieke Bezoekers".
+- [ ] **Dag 47:** **Vue Top Pages Tabel.** Een overzichtelijke tabel bouwen in de UI die de best presterende pagina's toont, inclusief een subtiele progress-bar per rij voor visuele verhoudingen.
+- [ ] **Dag 48:** **Apparaat & OS Distributie.** De gegevens uit de User Agent parser (van Dag 17) omzetten in een SQL-query en visualiseren in een Donut of Pie Chart (bijv. Mobiel vs. Desktop).
+- [ ] **Dag 49:** **Database Indexering (Performance).** Database-indexen leggen op de meest opgevraagde kolommen (`site_id`, `created_at`, `url`) in de events-tabel om te zorgen dat de nieuwe queries ook met duizenden rijen razendsnel blijven.
+- [ ] **Dag 50:** 🏁 **Tweede Milestone.** Een volledig beveiligd multi-tenant dashboard. Je logt in, switcht naadloos tussen je websites en ziet direct live berekende Bounce Rates, Top Pages en Time on Page statistieken in je UI.
 ---
 
 ## Fase 3: Enterprise Features (Dag 51 - 80)
