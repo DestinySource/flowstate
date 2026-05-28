@@ -69,18 +69,6 @@ const processedData = computed(() => {
       </div>
 
       <div class="analytics-controls">
-        <div class="filter-select-wrapper">
-          <select
-              v-model="selectedCutoff"
-              @change="handleCutoffChange"
-              class="filter-select"
-          >
-            <option value="24hours">24_HOURS</option>
-            <option value="7days">7_DAYS</option>
-            <option value="30days">30_DAYS</option>
-          </select>
-        </div>
-
         <div class="analytics-sort-box">
           <span class="label-caps">Unique Views</span>
           <button @click="isDescending = !isDescending" class="sort-trigger-btn" title="Sorteervolgorde aanpassen">
