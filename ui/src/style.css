@@ -596,6 +596,36 @@ body {
   text-align: center;
 }
 
+.header-control-zone {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.global-filter-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.global-filter-select {
+  background-color: var(--surface) !important;
+  color: var(--tertiary) !important; /* Cyaan-blauwe letters uit jouw schema */
+  border: 1px solid rgba(0, 240, 255, 0.2) !important;
+  padding: 4px 28px 4px 12px !important;
+  font-family: var(--font-heading), sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  height: 31px; /* Exact gelijke hoogte aan de badge-online */
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
 .opacity-40 {
   opacity: 0.4;
 }

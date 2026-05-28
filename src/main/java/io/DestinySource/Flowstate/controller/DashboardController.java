@@ -23,7 +23,7 @@ public class DashboardController {
             @RequestParam("host") String host,
             @RequestParam("cutOff") String cutOff) {
 
-            Map<String, List<AnalyticsItemProjection>> response = dashboardService.getDashboardStats(host, cutOff);
+            Map<String, List<AnalyticsItemProjection>> response = dashboardService.getWebsiteStats(host, cutOff);
             return ResponseEntity.ok(response);
     }
-}
+    }

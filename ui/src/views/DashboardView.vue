@@ -4,12 +4,17 @@ import CustomAnalyticsCard from '@/components/CustomAnalyticsCard.vue'
 
 const dashboardData = ref({
   hostname: [],
-  pages: []
+  pages: [],
+  browser: [],
+  os: [],
+  device: []
 })
 
 const isLoading = ref(true)
 const errorMessage = ref('')
 const currentHost = ref(window.location.host)
+
+// Dit is nu de enige, centrale tijdfilter voor de hele pagina
 const currentCutoff = ref('7days')
 
 const fetchDashboardStats = async () => {
@@ -29,6 +34,13 @@ const fetchDashboardStats = async () => {
   } finally {
     isLoading.value = false
   }
+}
+
+// Wordt direct aangeroepen zodra de gebruiker de centrale dropdown verandert
+const handleGlobalCutoffChange = (event: Event) => {
+  const target = event.target as HTMLSelectElement
+  currentCutoff.value = target.value
+  fetchDashboardStats()
 }
 
 onMounted(() => {
@@ -77,20 +89,34 @@ onMounted(() => {
       <div class="dashboard-container">
 
         <header class="dashboard-header">
-          <div>
+          <div class="header-left-zone">
             <h1 class="dashboard-title">FLOWSTATE ANALYTICS</h1>
             <p class="dashboard-subtitle">
               ACTIVE_TARGET: <span class="text-neon-pink">{{ currentHost }}</span>
             </p>
           </div>
 
-          <div class="status-indicator">
-            <div v-if="isLoading" class="pulse-connection">
-              CONNECTING
+          <div class="header-control-zone">
+            <div class="global-filter-wrapper">
+              <select
+                  :value="currentCutoff"
+                  @change="handleGlobalCutoffChange"
+                  class="global-filter-select"
+              >
+                <option value="24hours">Last 24 hours</option>
+                <option value="7days">Last 7 days</option>
+                <option value="30days">Last 30 days</option>
+              </select>
             </div>
-            <div v-else-if="!errorMessage" class="badge-online">
-              <span class="badge-dot"></span>
-              ONLINE
+
+            <div class="status-indicator">
+              <div v-if="isLoading" class="pulse-connection">
+                CONNECTING
+              </div>
+              <div v-else-if="!errorMessage" class="badge-online">
+                <span class="badge-dot"></span>
+                ONLINE
+              </div>
             </div>
           </div>
         </header>
@@ -102,15 +128,32 @@ onMounted(() => {
         </div>
 
         <main class="dashboard-grid">
-          <CustomAnalyticsCard
-              id="Source"
-              :tabs="['hostname', 'pages']"
-              :cardData="dashboardData"
-              :defaultCutoff="currentCutoff"
-              @update:cutoff="(newValue) => { currentCutoff = newValue; fetchDashboardStats(); }"
-          />
-        </main>
 
+          <div class="dashboard-section-block">
+            <h2 class="text-h2 section-title-spacing">SITE_METRICS</h2>
+            <div class="site-metrics-grid">
+              <CustomAnalyticsCard
+                  id="Source"
+                  :tabs="['hostname', 'pages']"
+                  :cardData="dashboardData"
+              />
+            </div>
+          </div>
+
+          <div class="stitch-divider"></div>
+
+          <div class="dashboard-section-block">
+            <h2 class="text-h2 section-title-spacing">USER_METRICS</h2>
+            <div class="user-metrics-grid">
+              <CustomAnalyticsCard
+                  id="SystemBrowsers"
+                  :tabs="['browser', 'os' ,'device']"
+                  :cardData="dashboardData"
+              />
+            </div>
+          </div>
+
+        </main>
       </div>
     </div>
 

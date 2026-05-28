@@ -38,4 +38,34 @@ public interface AnalyticsRepository extends JpaRepository<Analytics, Long> {
             @Param("siteHost") String siteHost,
             @Param("cutOffDate") LocalDateTime cutOffDate
     );
+
+    @Query("SELECT COALESCE(a.browser, 'Unknown') AS name ,COUNT(DISTINCT a.visitorId) AS uv " +
+            "FROM Analytics a " +
+            "WHERE a.site.siteHost = :siteHost " +
+            "AND a.createdAt >= :cutOffDate " +
+            "GROUP BY a.browser")
+    List<AnalyticsItemProjection> getStatsByBrowser(
+            @Param("siteHost") String siteHost,
+            @Param("cutOffDate") LocalDateTime cutOffDate
+    );
+
+    @Query("SELECT COALESCE(a.os, 'Unknown') AS name, COUNT(DISTINCT a.visitorId) AS uv " +
+            "FROM Analytics a " +
+            "WHERE a.site.siteHost = :siteHost " +
+            "AND a.createdAt >= :cutOffDate " +
+            "GROUP BY a.os")
+    List<AnalyticsItemProjection> getStatsByOs(
+            @Param("siteHost") String siteHost,
+            @Param("cutOffDate") LocalDateTime cutOffDate
+    );
+
+    @Query("SELECT COALESCE(a.device, 'Unknown') AS name, COUNT(DISTINCT a.visitorId) AS uv " +
+            "FROM Analytics a " +
+            "WHERE a.site.siteHost = :siteHost " +
+            "AND a.createdAt >= :cutOffDate " +
+            "GROUP BY a.device")
+    List<AnalyticsItemProjection> getStatsByDevice(
+            @Param("siteHost") String siteHost,
+            @Param("cutOffDate") LocalDateTime cutOffDate
+    );
 }

@@ -3,6 +3,7 @@ package io.DestinySource.Flowstate.service;
 import io.DestinySource.Flowstate.dto.AnalyticsItemProjection;
 import io.DestinySource.Flowstate.exception.ResourceNotFoundException;
 import io.DestinySource.Flowstate.exception.UnauthorizedException;
+import io.DestinySource.Flowstate.model.Analytics;
 import io.DestinySource.Flowstate.model.Site;
 import io.DestinySource.Flowstate.repository.AnalyticsRepository;
 import io.DestinySource.Flowstate.repository.SiteRepository;
@@ -26,7 +27,7 @@ public class DashboardService {
     }
 
     @Transactional(readOnly = true)
-    public Map<String, List<AnalyticsItemProjection>> getDashboardStats(String host, String cutOff) {
+    public Map<String, List<AnalyticsItemProjection>> getWebsiteStats(String host, String cutOff) {
         Site site = siteRepository.findBySiteHost(host)
                 .orElseThrow(() -> new ResourceNotFoundException("Host '" + host + "' niet gevonden."));
 
@@ -40,7 +41,10 @@ public class DashboardService {
         dashboardData.put("hostname", analyticsRepository.getStatsByHostname(host));
 
         dashboardData.put("pages", analyticsRepository.getStatsByPages(host, cutOffDate));
-
+        
+        dashboardData.put("browser", analyticsRepository.getStatsByBrowser(host, cutOffDate));
+        dashboardData.put("os", analyticsRepository.getStatsByOs(host, cutOffDate));
+        dashboardData.put("device", analyticsRepository.getStatsByDevice(host, cutOffDate));
         return dashboardData;
     }
 
