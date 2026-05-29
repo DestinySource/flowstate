@@ -44,9 +44,9 @@
 - [x] **Dag 22:** **User Entity & DB.** Een `User` class aanmaken in Java met rollen (bijv. `ROLE_USER`) en de bijbehorende PostgreSQL-tabel opzetten.
 - [x] **Dag 23:** **Password Hashing.** BCrypt configureren in Spring Boot zodat wachtwoorden veilig (gehashed) in de database worden opgeslagen.
 - [x] **Dag 24:** **Spring Security Fundering.** De security filter chain opzetten. Alle endpoints blokkeren behalve de publieke `/api/track` (deze moet openblijven voor je tracker script!).
-- [ ] **Dag 25:** **JWT Utilities.** Een Java utility class schrijven die JSON Web Tokens kan genereren, signeren en valideren.
-- [ ] **Dag 26:** **Login Endpoint.** Een `/api/auth/login` endpoint bouwen dat een geldige JWT token teruggeeft bij de juiste inloggegevens.
-- [ ] **Dag 27:** **JWT Authentication Filter.** Een filter bouwen dat bij elk dashboard-verzoek checkt of de meegeleverde JWT in de HTTP Authorization Header geldig is.
+- [x] **Dag 25:** **JWT Utilities.** Een Java utility class schrijven die JSON Web Tokens kan genereren, signeren en valideren.
+- [x] **Dag 26:** **Login Endpoint.** Een `/api/auth/login` endpoint bouwen dat een geldige JWT token teruggeeft bij de juiste inloggegevens.
+- [x] **Dag 27:** **JWT Authentication Filter.** Een filter bouwen dat bij elk dashboard-verzoek checkt of de meegeleverde JWT in de HTTP Authorization Header geldig is.
 - [ ] **Dag 28:** **Vue Auth Store.** Pinia store (of een composable) opzetten in Vue om de JWT-token en de ingelogde status van de gebruiker te beheren.
 - [ ] **Dag 29:** **Vue Login Interface.** Een strakke login-pagina bouwen in Vue met Tailwind CSS en deze succesvol koppelen aan het backend endpoint.
 - [ ] **Dag 30:** **Navigation Guards.** Vue Router zo instellen dat niet-ingelogde gebruikers automatisch naar de login-pagina worden omgeleid (Auth Middleware).
