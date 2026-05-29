@@ -1,5 +1,7 @@
 package io.DestinySource.Flowstate.controller;
 
+import io.DestinySource.Flowstate.dto.LoginRequestDTO;
+import io.DestinySource.Flowstate.dto.LoginResponseDTO;
 import io.DestinySource.Flowstate.dto.RegisterRequestDTO;
 import io.DestinySource.Flowstate.model.User;
 import io.DestinySource.Flowstate.service.UserService;
@@ -24,5 +26,11 @@ public class AuthController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body("Gebruiker succesvol geregistreerd met ID: " + registeredUser.getId());
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseDTO> loginUser(@RequestBody LoginRequestDTO loginRequestDTO) {
+        LoginResponseDTO response = userService.login(loginRequestDTO);
+        return ResponseEntity.ok(response);
     }
 }

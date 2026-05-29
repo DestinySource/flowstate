@@ -1,19 +1,18 @@
 package io.DestinySource.Flowstate.service;
 
 import io.DestinySource.Flowstate.dto.AnalyticsItemProjection;
+import io.DestinySource.Flowstate.dto.DashboardResponseDTO;
 import io.DestinySource.Flowstate.exception.ResourceNotFoundException;
 import io.DestinySource.Flowstate.exception.UnauthorizedException;
-import io.DestinySource.Flowstate.model.Analytics;
 import io.DestinySource.Flowstate.model.Site;
+import io.DestinySource.Flowstate.model.User;
 import io.DestinySource.Flowstate.repository.AnalyticsRepository;
 import io.DestinySource.Flowstate.repository.SiteRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class DashboardService {
@@ -27,7 +26,7 @@ public class DashboardService {
     }
 
     @Transactional(readOnly = true)
-    public Map<String, List<AnalyticsItemProjection>> getWebsiteStats(String host, String cutOff) {
+    public DashboardResponseDTO getWebsiteStats(String host, String cutOff, User user) {
         Site site = siteRepository.findBySiteHost(host)
                 .orElseThrow(() -> new ResourceNotFoundException("Host '" + host + "' niet gevonden."));
 
@@ -37,15 +36,12 @@ public class DashboardService {
 
         LocalDateTime cutOffDate = calculateCutOffDate(cutOff);
 
-        Map<String, List<AnalyticsItemProjection>> dashboardData = new HashMap<>();
-        dashboardData.put("hostname", analyticsRepository.getStatsByHostname(host));
+        List<AnalyticsItemProjection> pages = analyticsRepository.getStatsByPages(host, cutOffDate);
+        List<AnalyticsItemProjection> browser = analyticsRepository.getStatsByBrowser(host, cutOffDate);
+        List<AnalyticsItemProjection> os = analyticsRepository.getStatsByOs(host, cutOffDate);
+        List<AnalyticsItemProjection> device = analyticsRepository.getStatsByDevice(host, cutOffDate);
 
-        dashboardData.put("pages", analyticsRepository.getStatsByPages(host, cutOffDate));
-        
-        dashboardData.put("browser", analyticsRepository.getStatsByBrowser(host, cutOffDate));
-        dashboardData.put("os", analyticsRepository.getStatsByOs(host, cutOffDate));
-        dashboardData.put("device", analyticsRepository.getStatsByDevice(host, cutOffDate));
-        return dashboardData;
+        return new DashboardResponseDTO(host, site.isVerified(), pages, browser, os, device);
     }
 
     private LocalDateTime calculateCutOffDate(String cutOff) {

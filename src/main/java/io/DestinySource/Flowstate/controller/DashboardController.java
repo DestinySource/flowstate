@@ -1,12 +1,11 @@
 package io.DestinySource.Flowstate.controller;
 
-import io.DestinySource.Flowstate.dto.AnalyticsItemProjection;
+import io.DestinySource.Flowstate.dto.DashboardResponseDTO;
+import io.DestinySource.Flowstate.model.User;
 import io.DestinySource.Flowstate.service.DashboardService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/dashboard")
@@ -19,11 +18,12 @@ public class DashboardController {
     }
 
     @GetMapping("/stats")
-    public ResponseEntity<?> getStats(
+    public ResponseEntity<DashboardResponseDTO> getStats(
             @RequestParam("host") String host,
-            @RequestParam("cutOff") String cutOff) {
+            @RequestParam("cutOff") String cutOff,
+            @AuthenticationPrincipal User user) {
 
-            Map<String, List<AnalyticsItemProjection>> response = dashboardService.getWebsiteStats(host, cutOff);
-            return ResponseEntity.ok(response);
+        DashboardResponseDTO response = dashboardService.getWebsiteStats(host, cutOff, user);
+        return ResponseEntity.ok(response);
     }
-    }
+}
