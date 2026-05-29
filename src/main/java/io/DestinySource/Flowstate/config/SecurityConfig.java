@@ -28,7 +28,7 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/register").permitAll()
-                        .requestMatchers("/api/track").permitAll()
+                        .requestMatchers("/api/v1/analytics").permitAll()
                         .anyRequest().authenticated()
                 );
 

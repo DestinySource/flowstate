@@ -42,8 +42,8 @@
 *Doel: Het dashboard beveiligen zodat alleen geautoriseerde gebruikers bij de data kunnen.*
 
 - [x] **Dag 22:** **User Entity & DB.** Een `User` class aanmaken in Java met rollen (bijv. `ROLE_USER`) en de bijbehorende PostgreSQL-tabel opzetten.
-- [ ] **Dag 23:** **Password Hashing.** BCrypt configureren in Spring Boot zodat wachtwoorden veilig (gehashed) in de database worden opgeslagen.
-- [ ] **Dag 24:** **Spring Security Fundering.** De security filter chain opzetten. Alle endpoints blokkeren behalve de publieke `/api/track` (deze moet openblijven voor je tracker script!).
+- [x] **Dag 23:** **Password Hashing.** BCrypt configureren in Spring Boot zodat wachtwoorden veilig (gehashed) in de database worden opgeslagen.
+- [x] **Dag 24:** **Spring Security Fundering.** De security filter chain opzetten. Alle endpoints blokkeren behalve de publieke `/api/track` (deze moet openblijven voor je tracker script!).
 - [ ] **Dag 25:** **JWT Utilities.** Een Java utility class schrijven die JSON Web Tokens kan genereren, signeren en valideren.
 - [ ] **Dag 26:** **Login Endpoint.** Een `/api/auth/login` endpoint bouwen dat een geldige JWT token teruggeeft bij de juiste inloggegevens.
 - [ ] **Dag 27:** **JWT Authentication Filter.** Een filter bouwen dat bij elk dashboard-verzoek checkt of de meegeleverde JWT in de HTTP Authorization Header geldig is.
