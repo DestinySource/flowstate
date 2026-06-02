@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import { motion } from 'motion-v'
 import HeroHeader from '@/components/HeroHeader.vue'
-import FeatureCard from '@/components/FeatureCard.vue'
 import ApiButton from "@/components/ApiButton.vue";
 
 const showExtra = ref(false)
@@ -10,18 +9,6 @@ const apiStatus = ref<'idle' | 'loading' | 'success' | 'error'>('idle')
 
 const siteId: string = location.host;
 const getVisitorId = () => localStorage.getItem("user_id") || "anonymous";
-
-const features = [
-  { id: 1, title: 'Hardware Accelerated', icon: '🚀' },
-  { id: 2, title: 'App-like Gestures', icon: '📱' },
-  { id: 3, title: 'Layout Animations', icon: '✨' }
-]
-
-const showcaseFeatures = [
-  { id: 1, title: 'AI-Driven Predictions', description: 'Our custom models analyze terabytes of historical data to forecast trends with unprecedented precision.', icon: '🧠' },
-  { id: 2, title: 'Real-Time Data Ingestion', description: 'Process millions of events per second with sub-millisecond latency using our optimized Go pipelines.', icon: '⚡' },
-  { id: 3, title: 'Cloud-Native Architecture', description: 'Scale dynamically to meet demand without overprovisioning, thanks to our K8s-based platform.', icon: '☁️' }
-]
 
 const analyticsPayload = {
   visitorId: getVisitorId(),
@@ -75,16 +62,6 @@ async function handleApiCall() {
       <div class="stitch-divider"></div>
     </section>
 
-    <section class="grid-container">
-      <FeatureCard
-          v-for="(item, index) in features"
-          :key="item.id"
-          :title="item.title"
-          :icon="item.icon"
-          :index="index"
-      />
-    </section>
-
     <section class="interactive-zone">
       <motion.div
           layout
@@ -116,13 +93,6 @@ async function handleApiCall() {
   padding: 2rem;
   max-width: 1100px;
   margin: 0 auto;
-}
-
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  margin-top: 4rem;
 }
 
 .interactive-zone {
