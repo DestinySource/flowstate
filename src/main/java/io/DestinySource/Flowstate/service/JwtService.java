@@ -34,15 +34,15 @@
                     .compact();
         }
 
-        public String generateRefreshToken(User user){
-            return Jwts.builder()
-                    .subject(user.getId().toString())
-                    .claim("type", "refresh")
-                    .issuedAt(new Date())
-                    .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7))
-                    .signWith(getSecretKey())
-                    .compact();
-        }
+//        public String generateRefreshToken(User user){
+//            return Jwts.builder()
+//                    .subject(user.getId().toString())
+//                    .claim("type", "refresh")
+//                    .issuedAt(new Date())
+//                    .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7))
+//                    .signWith(getSecretKey())
+//                    .compact();
+//        }
 
         public Long getUserIdFromToken(String token, String expectedType) {
             Claims claims = Jwts.parser()
