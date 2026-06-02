@@ -29,7 +29,7 @@
                     .claim("username", user.getUsername())
                     .claim("role", user.getRole().name())
                     .issuedAt(new Date())
-                    .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 15))
+                    .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                     .signWith(getSecretKey())
                     .compact();
         }
