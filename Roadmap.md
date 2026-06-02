@@ -47,8 +47,8 @@
 - [x] **Dag 25:** **JWT Utilities.** Een Java utility class schrijven die JSON Web Tokens kan genereren, signeren en valideren.
 - [x] **Dag 26:** **Login Endpoint.** Een `/api/auth/login` endpoint bouwen dat een geldige JWT token teruggeeft bij de juiste inloggegevens.
 - [x] **Dag 27:** **JWT Authentication Filter.** Een filter bouwen dat bij elk dashboard-verzoek checkt of de meegeleverde JWT in de HTTP Authorization Header geldig is.
-- [ ] **Dag 28:** **Vue Auth Store.** Pinia store (of een composable) opzetten in Vue om de JWT-token en de ingelogde status van de gebruiker te beheren.
-- [ ] **Dag 29:** **Vue Login Interface.** Een strakke login-pagina bouwen in Vue met Tailwind CSS en deze succesvol koppelen aan het backend endpoint.
+- [x] **Dag 28:** **Vue Auth Store.** Een composable opzetten in Vue om de JWT-token en de ingelogde status van de gebruiker te beheren.
+- [x] **Dag 29:** **Vue Login Interface.** Een strakke login-pagina bouwen in Vue met Tailwind CSS en deze succesvol koppelen aan het backend endpoint.
 - [ ] **Dag 30:** **Navigation Guards.** Vue Router zo instellen dat niet-ingelogde gebruikers automatisch naar de login-pagina worden omgeleid (Auth Middleware).
 
 ### Multi-Tenancy & Website Beheer (Dag 31 - 40)
