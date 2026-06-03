@@ -15,12 +15,28 @@ const router = createRouter({
             path: '/dashboard',
             name: 'dashboard',
             component: DashboardView,
+            meta: { requiresAuth: true }
         },
         {
             path: '/login',
             name: 'login',
             component: LoginView,
+            meta: { guestOnly: true }
         }
     ],
+})
+
+router.beforeEach((to, from, next) => {
+    const isAuthenticated = sessionStorage.getItem("fs_token")
+
+    if (to.meta.requiresAuth && !isAuthenticated) {
+        return next({ name: 'login'})
+    }
+
+    if (to.meta.guestOnly && isAuthenticated){
+        return next({ name: 'dashboard'})
+    }
+
+    next()
 })
 export default router

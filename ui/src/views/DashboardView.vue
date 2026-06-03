@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import CustomAnalyticsCard from '@/components/CustomAnalyticsCard.vue'
+import { useAuth } from '@/composables/useAuth'
+
+const { apiFetch } = useAuth()
 
 const dashboardData = ref({
   hostname: [],
@@ -14,7 +17,6 @@ const isLoading = ref(true)
 const errorMessage = ref('')
 const currentHost = ref(window.location.host)
 
-// Dit is nu de enige, centrale tijdfilter voor de hele pagina
 const currentCutoff = ref('7days')
 
 const fetchDashboardStats = async () => {
@@ -22,7 +24,7 @@ const fetchDashboardStats = async () => {
     isLoading.value = true
     errorMessage.value = ''
 
-    const response = await fetch(`https://localhost:8443/api/dashboard/stats?host=${currentHost.value}&cutOff=${currentCutoff.value}`)
+    const response = await apiFetch(`https://localhost:8443/api/dashboard/stats?host=${currentHost.value}&cutOff=${currentCutoff.value}`)
     if (!response.ok) {
       errorMessage.value = await response.text()
       return
@@ -36,7 +38,6 @@ const fetchDashboardStats = async () => {
   }
 }
 
-// Wordt direct aangeroepen zodra de gebruiker de centrale dropdown verandert
 const handleGlobalCutoffChange = (event: Event) => {
   const target = event.target as HTMLSelectElement
   currentCutoff.value = target.value
