@@ -1,42 +1,32 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import DashboardView from "@/views/DashboardView.vue";
-import LoginView from "@/views/LoginView.vue";
+import DashboardView from "@/views/DashboardView.vue"
+import LoginView from "@/views/LoginView.vue"
+import { useAuth } from "@/composables/useAuth.ts"
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
-        {
-            path: '/',
-            name: 'home',
-            component: HomeView,
-        },
-        {
-            path: '/dashboard',
-            name: 'dashboard',
-            component: DashboardView,
-            meta: { requiresAuth: true }
-        },
-        {
-            path: '/login',
-            name: 'login',
-            component: LoginView,
-            meta: { guestOnly: true }
-        }
+        { path: '/', name: 'home', component: HomeView },
+        { path: '/dashboard', name: 'dashboard', component: DashboardView, meta: { requiresAuth: true } },
+        { path: '/login', name: 'login', component: LoginView, meta: { guestOnly: true } }
     ],
 })
 
-router.beforeEach((to, from, next) => {
-    const isAuthenticated = sessionStorage.getItem("fs_token")
+router.beforeEach(async (to, from, next) => {
+    const { isAuthenticated, tryRestoreSession } = useAuth()
 
-    if (to.meta.requiresAuth && !isAuthenticated) {
-        return next({ name: 'login'})
+    await tryRestoreSession()
+
+    if (to.meta.requiresAuth && !isAuthenticated.value) {
+        return next({ name: 'login' })
     }
 
-    if (to.meta.guestOnly && isAuthenticated){
-        return next({ name: 'dashboard'})
+    if (to.meta.guestOnly && isAuthenticated.value) {
+        return next({ name: 'dashboard' })
     }
 
     next()
 })
+
 export default router

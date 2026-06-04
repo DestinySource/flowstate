@@ -13,7 +13,7 @@ const isLoading = ref(false)
 
 async function handleLogin() {
   if (!email.value || !password.value) {
-    errorMessage.value = 'Vul alstublieft alle velden in.'
+    errorMessage.value = 'Please fill in all fields'
     return
   }
 
@@ -27,8 +27,8 @@ async function handleLogin() {
     })
 
     router.push('/dashboard')
-  } catch (err) {
-    errorMessage.value = err.message || 'Er is iets misgegaan.'
+  } catch (err: any) {
+    errorMessage.value = err.message || 'Authentication issue'
   } finally {
     isLoading.value = false
   }
@@ -36,58 +36,84 @@ async function handleLogin() {
 </script>
 
 <template>
-  <div class="flex min-h-screen items-center justify-center bg-gray-900 px-4 py-12 sm:px-6 lg:px-8">
-    <div class="w-full max-w-md space-y-8 bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-700">
-      <div>
-        <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-white">
+  <div class="flex min-h-screen w-screen items-center justify-center bg-[#0B0B0E] px-4 font-mono antialiased text-neutral-200">
+    <div class="w-full max-w-md rounded-lg border border-neutral-800 bg-neutral-950 p-8 shadow-xl relative overflow-hidden">
+
+      <div class="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-pink-500/40 to-transparent"></div>
+
+      <div class="mb-8 text-center flex flex-col gap-1">
+        <h2 class="text-3xl font-black tracking-widest text-white uppercase">
           Flowstate
         </h2>
-        <p class="mt-2 text-center text-sm text-gray-400">
-          Log in op jouw account
+        <p class="text-s font-black tracking-widest text-neutral-400 uppercase">
+         Log in to your account
         </p>
       </div>
 
-      <div v-if="errorMessage" class="bg-red-500/10 border border-red-500 text-red-500 p-3 rounded-lg text-sm text-center">
-        {{ errorMessage }}
+      <div
+          v-if="errorMessage"
+          class="mb-6 bg-pink-500/5 border border-pink-500/20 text-pink-500 p-3 rounded text-xs text-center uppercase tracking-wide font-bold"
+      >
+        !! {{ errorMessage }} !!
       </div>
 
-      <form class="mt-8 space-y-6" @submit.prevent="handleLogin">
-        <div class="space-y-4 rounded-md shadow-sm">
-          <div>
-            <label for="email-address" class="block text-sm font-medium text-gray-300 mb-1">E-mailadres</label>
+      <form class="space-y-5" @submit.prevent="handleLogin">
+
+        <div>
+          <label for="email-address" class="block text-[11px] font-bold tracking-wider text-neutral-500 uppercase mb-2">
+            Email
+          </label>
+          <div class="relative flex items-center">
+            <span class="absolute left-3 h-1 w-1 bg-cyan-400 rounded-full shadow-[0_0_6px_#00f0ff]"></span>
             <input
                 id="email-address"
                 v-model="email"
                 type="email"
                 required
-                class="relative block w-full rounded-lg border-0 bg-gray-700 py-2.5 px-3 text-white placeholder-gray-400 ring-1 ring-inset ring-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
-                placeholder="naam@voorbeeld.com"
-            />
-          </div>
-          <div>
-            <label for="password" class="block text-sm font-medium text-gray-300 mb-1">Wachtwoord</label>
-            <input
-                id="password"
-                v-model="password"
-                type="password"
-                required
-                class="relative block w-full rounded-lg border-0 bg-gray-700 py-2.5 px-3 text-white placeholder-gray-400 ring-1 ring-inset ring-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
-                placeholder="••••••••"
+                class="block w-full rounded border border-neutral-900/50 bg-neutral-900/20 py-2.5 pl-7 pr-3 text-xs text-white placeholder-neutral-700 outline-none transition-all duration-300 focus:border-pink-500/40 focus:bg-neutral-900/50 focus:ring-1 focus:ring-pink-500/10"
+                placeholder="email@address.com"
             />
           </div>
         </div>
 
         <div>
+          <label for="password" class="block text-[11px] font-bold tracking-wider text-neutral-500 uppercase mb-2">
+            Password
+          </label>
+          <div class="relative flex items-center">
+            <span class="absolute left-3 h-1 w-1 bg-cyan-400 rounded-full shadow-[0_0_6px_#00f0ff]"></span>
+            <input
+                id="password"
+                v-model="password"
+                type="password"
+                required
+                class="block w-full rounded border border-neutral-900/50 bg-neutral-900/20 py-2.5 pl-7 pr-3 text-xs text-white placeholder-neutral-700 outline-none transition-all duration-300 focus:border-pink-500/40 focus:bg-neutral-900/50 focus:ring-1 focus:ring-pink-500/10"
+                placeholder="••••••••"
+            />
+          </div>
+        </div>
+
+        <div class="pt-2">
           <button
               type="submit"
               :disabled="isLoading"
-              class="group relative flex w-full justify-center rounded-lg bg-indigo-600 py-2.5 px-4 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-colors duration-200 disabled:opacity-50"
+              class="relative flex w-full justify-center rounded border border-pink-500/20 bg-pink-500/10 py-2.5 text-xs font-bold tracking-widest text-pink-500 uppercase outline-none transition-all duration-200 hover:bg-pink-500/15 hover:border-pink-500/30 focus:ring-1 focus:ring-pink-500/30 disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            <span v-if="isLoading">Laden...</span>
-            <span v-else>Inloggen</span>
+            <span v-if="isLoading" class="animate-pulse tracking-widest">INITIALIZING_SESSION...</span>
+            <span v-else class="flex items-center gap-1.5">
+              Login
+            </span>
           </button>
         </div>
+
       </form>
+
+      <div class="mt-8 pt-4 border-t border-neutral-900 text-center">
+        <span class="text-[10px] tracking-widest text-neutral-600 uppercase font-medium">
+          FLOWSTATE SYSTEM ARCHITECTURE v1.1.0
+        </span>
+      </div>
+
     </div>
   </div>
 </template>

@@ -6,7 +6,7 @@ import { useAuth } from '@/composables/useAuth'
 const { apiFetch } = useAuth()
 
 const dashboardData = ref({
-  hostname: [],
+  host: [],
   pages: [],
   browser: [],
   os: [],
@@ -16,7 +16,6 @@ const dashboardData = ref({
 const isLoading = ref(true)
 const errorMessage = ref('')
 const currentHost = ref(window.location.host)
-
 const currentCutoff = ref('7days')
 
 const fetchDashboardStats = async () => {
@@ -50,104 +49,119 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="app-container">
+  <div class="flex min-h-screen w-screen bg-[#0B0B0E] text-neutral-300 font-sans antialiased selection:bg-pink-500/30 selection:text-white">
 
-    <aside class="sidebar-display">
-      <div class="sidebar-block brand-block">
-        <div class="sidebar-logo">FLOWSTATE</div>
+    <aside class="flex w-72 min-w-[280px] flex-col border-r-2 border-pink-500 bg-[#08080B] px-6 py-10 font-mono">
+      <div class="mb-8 border-b border-neutral-950 pb-6">
+        <div class="text-2xl font-black tracking-wider text-white uppercase">
+          FLOWSTATE
+        </div>
+        <div class="mt-1 text-[10px] font-bold tracking-widest text-pink-500 drop-shadow-[0_0_8px_rgba(236,72,153,0.3)]">
+          ANALYTICS_NODE
+        </div>
       </div>
 
-      <nav class="sidebar-block sidebar-nav">
-        <a href="#" class="sidebar-link is-active">
-          <span class="sidebar-link-dot"></span> OVERVIEW
+      <nav class="flex flex-col gap-2 border-b border-neutral-900 pb-6 mb-6">
+        <a href="#" class="flex items-center gap-3 rounded bg-pink-500/5 border border-pink-500/10 px-4 py-2.5 text-xs font-bold tracking-wider text-white">
+          <span class="h-1.5 w-1.5 rounded-full bg-pink-500"></span> OVERVIEW
         </a>
-        <a href="#" class="sidebar-link">
-          <span class="sidebar-link-dot"></span> LIVE_TRAFFIC
+        <a href="#" class="flex items-center gap-3 rounded px-4 py-2.5 text-xs font-medium tracking-wider text-neutral-500 hover:bg-neutral-900 hover:text-neutral-200 transition-colors">
+          <span class="h-1.5 w-1.5 rounded-full bg-neutral-700"></span> LIVE_TRAFFIC
         </a>
-        <a href="#" class="sidebar-link">
-          <span class="sidebar-link-dot"></span> BEHAVIOR
-        </a>
-      </nav>
-
-      <nav class="sidebar-block sidebar-nav">
-        <a href="#" class="sidebar-link">
-          <span class="sidebar-link-dot"></span> SYSTEM_SETTINGS
-        </a>
-        <a href="#" class="sidebar-link">
-          <span class="sidebar-link-dot"></span> VERIFICATION
-        </a>
-        <a href="#" class="sidebar-link">
-          <span class="sidebar-link-dot"></span> LOGS
+        <a href="#" class="flex items-center gap-3 rounded px-4 py-2.5 text-xs font-medium tracking-wider text-neutral-500 hover:bg-neutral-900 hover:text-neutral-200 transition-colors">
+          <span class="h-1.5 w-1.5 rounded-full bg-neutral-700"></span> BEHAVIOR
         </a>
       </nav>
 
-      <div class="sidebar-footer-block">
-        <span class="label-caps opacity-40">v1.0.4-beta</span>
+      <nav class="flex flex-col gap-2 border-b border-neutral-900 pb-6">
+        <a href="#" class="flex items-center gap-3 rounded px-4 py-2.5 text-xs font-medium tracking-wider text-neutral-500 hover:bg-neutral-900 hover:text-neutral-200 transition-colors">
+          <span class="h-1.5 w-1.5 rounded-full bg-neutral-700"></span> SYSTEM_SETTINGS
+        </a>
+        <a href="#" class="flex items-center gap-3 rounded px-4 py-2.5 text-xs font-medium tracking-wider text-neutral-500 hover:bg-neutral-900 hover:text-neutral-200 transition-colors">
+          <span class="h-1.5 w-1.5 rounded-full bg-neutral-700"></span> VERIFICATION
+        </a>
+        <a href="#" class="flex items-center gap-3 rounded px-4 py-2.5 text-xs font-medium tracking-wider text-neutral-500 hover:bg-neutral-900 hover:text-neutral-200 transition-colors">
+          <span class="h-1.5 w-1.5 rounded-full bg-neutral-700"></span> LOGS
+        </a>
+      </nav>
+
+      <div class="mt-auto pt-4">
+        <span class="text-[10px] tracking-widest text-neutral-600 font-bold uppercase">v1.0.1</span>
       </div>
     </aside>
 
-    <div class="dashboard-view">
-      <div class="dashboard-container">
+    <div class="flex-grow overflow-y-auto px-8 py-12 lg:px-16">
+      <div class="mx-auto w-full max-w-5xl flex flex-col gap-8">
 
-        <header class="dashboard-header">
-          <div class="header-left-zone">
-            <h1 class="dashboard-title">FLOWSTATE ANALYTICS</h1>
-            <p class="dashboard-subtitle">
-              ACTIVE_TARGET: <span class="text-neon-pink">{{ currentHost }}</span>
+        <header class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-neutral-900 pb-6">
+          <div class="font-mono">
+            <h1 class="text-3xl font-black tracking-tight text-white uppercase">Dash board</h1>
+            <p class="mt-1 text-xs text-neutral-500 tracking-wide">
+              ACTIVE_TARGET: <span class="font-bold text-pink-500 drop-shadow-[0_0_6px_rgba(236,72,153,0.2)]">{{ currentHost }}</span>
             </p>
           </div>
 
-          <div class="header-control-zone">
-            <div class="global-filter-wrapper">
+          <div class="flex items-center gap-4 font-mono">
+            <div class="relative">
               <select
                   :value="currentCutoff"
                   @change="handleGlobalCutoffChange"
-                  class="global-filter-select"
+                  class="h-9 appearance-none rounded border border-cyan-500/20 bg-neutral-900 pl-4 pr-10 text-xs font-bold tracking-wider text-cyan-400 outline-none transition-all hover:border-cyan-500/40 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400"
               >
                 <option value="24hours">Last 24 hours</option>
                 <option value="7days">Last 7 days</option>
                 <option value="30days">Last 30 days</option>
               </select>
+              <span class="absolute right-3.5 top-[11px] pointer-events-none text-[9px] text-cyan-400/70">▼</span>
             </div>
 
-            <div class="status-indicator">
-              <div v-if="isLoading" class="pulse-connection">
-                CONNECTING
+            <div class="text-xs">
+              <div v-if="isLoading" class="animate-pulse font-bold tracking-widest text-pink-400 uppercase">
+                CONNECTING...
               </div>
-              <div v-else-if="!errorMessage" class="badge-online">
-                <span class="badge-dot"></span>
+              <div v-else-if="!errorMessage" class="flex items-center gap-2 rounded border border-cyan-500/20 bg-cyan-500/5 px-3 py-1.5 text-xs font-bold tracking-widest text-cyan-400">
+                <span class="relative flex h-2 w-2">
+                  <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75"></span>
+                  <span class="relative inline-flex h-2 w-2 rounded-full bg-cyan-400"></span>
+                </span>
                 ONLINE
               </div>
             </div>
           </div>
         </header>
 
-        <div v-if="errorMessage" class="alert-dispatch">
-          <span class="alert-title">ERROR</span>
-          <p class="alert-message">{{ errorMessage }}</p>
-          <span class="alert-footer">Please contact a developer! We will try to fix this problem. And thank you for your help 🩷</span>
+        <div v-if="errorMessage" class="flex flex-col rounded border border-red-900 bg-red-950/20 p-5 font-mono shadow-lg shadow-red-950/10 animate-fade-in">
+          <span class="text-xs font-black tracking-widest text-red-400 uppercase">!! SYSTEM_ERROR_DISPATCH !!</span>
+          <p class="my-3 text-sm text-neutral-300 leading-relaxed">{{ errorMessage }}</p>
+          <span class="text-[10px] tracking-wide text-red-400/50">
+            Please contact a developer. Thank you for your support 🩷
+          </span>
         </div>
 
-        <main class="dashboard-grid">
+        <main class="flex flex-col gap-10">
 
-          <div class="dashboard-section-block">
-            <h2 class="text-h2 section-title-spacing">SITE_METRICS</h2>
-            <div class="site-metrics-grid">
+          <div class="flex flex-col gap-4">
+            <h3 class="font-mono text-sm font-black tracking-widest text-neutral-500 uppercase">Site metrics</h3>
+            <div class="grid grid-cols-1 gap-6">
               <CustomAnalyticsCard
                   id="Source"
-                  :tabs="['hostname', 'pages']"
+                  :tabs="['host', 'pages']"
                   :cardData="dashboardData"
               />
             </div>
           </div>
 
-          <div class="stitch-divider"></div>
+          <div class="relative flex py-2 items-center font-mono">
+            <div class="flex-grow border-t border-neutral-900"></div>
+            <span class="flex-shrink mx-4 text-[10px] font-bold tracking-[0.3em] text-pink-500/40 select-none">DATA_STREAM</span>
+            <div class="flex-grow border-t border-neutral-900"></div>
+          </div>
 
-          <div class="dashboard-section-block">
-            <h2 class="text-h2 section-title-spacing">USER_METRICS</h2>
-            <div class="user-metrics-grid">
+          <div class="flex flex-col gap-4">
+            <h3 class="font-mono text-sm font-black tracking-widest text-neutral-500 uppercase">User metrics</h3>
+            <div class="grid grid-cols-1 gap-6">
               <CustomAnalyticsCard
-                  id="SystemBrowsers"
+                  id="System_Environments"
                   :tabs="['browser', 'os' ,'device']"
                   :cardData="dashboardData"
               />
