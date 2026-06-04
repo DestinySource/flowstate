@@ -47,6 +47,26 @@ export function useAuth() {
         }
     }
 
+    async function register(credentials: Record<string, string>) {
+        try {
+            const response = await fetch('https://localhost:8443/api/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(credentials),
+            })
+
+            if (!response.ok) {
+                throw new Error('ACCESS_DENIED: Ongeldige inloggegevens.')
+            }
+
+            const { username, ...loginPayload } = credentials;
+            await login(loginPayload);
+        } catch (error) {
+            console.error('Auth Error:', error)
+            throw error
+        }
+    }
+
     function tryRestoreSession() {
         const savedToken = sessionStorage.getItem('fs_token')
         const savedUser = sessionStorage.getItem('fs_user')
@@ -68,6 +88,7 @@ export function useAuth() {
         user,
         isAuthenticated,
         login,
+        register,
         logout,
         tryRestoreSession,
         apiFetch

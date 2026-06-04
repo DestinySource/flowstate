@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import DashboardView from "@/views/DashboardView.vue"
 import LoginView from "@/views/LoginView.vue"
+import RegisterView from "@/views/RegisterView.vue";
 import { useAuth } from "@/composables/useAuth.ts"
 
 const router = createRouter({
@@ -9,7 +10,8 @@ const router = createRouter({
     routes: [
         { path: '/', name: 'home', component: HomeView },
         { path: '/dashboard', name: 'dashboard', component: DashboardView, meta: { requiresAuth: true } },
-        { path: '/login', name: 'login', component: LoginView, meta: { guestOnly: true } }
+        { path: '/login', name: 'login', component: LoginView, meta: { guestOnly: true } },
+        { path: '/register', name: 'register', component: RegisterView, meta: { guestOnly: true } }
     ],
 })
 
