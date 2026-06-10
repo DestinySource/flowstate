@@ -1,10 +1,14 @@
     package io.DestinySource.Flowstate.model;
 
+    import com.fasterxml.jackson.annotation.JsonIgnore;
     import jakarta.persistence.*;
     import lombok.AllArgsConstructor;
     import lombok.Getter;
     import lombok.NoArgsConstructor;
     import lombok.Setter;
+
+    import java.util.HashSet;
+    import java.util.Set;
 
     @Entity
     @Table(name = "site")
@@ -22,4 +26,8 @@
 
         @Column(name = "verified")
         private boolean verified;
+
+        @ManyToMany(mappedBy = "sites", fetch = FetchType.LAZY)
+        @JsonIgnore
+        private Set<User> users = new HashSet<>();
     }
