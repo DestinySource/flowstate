@@ -8,4 +8,5 @@ import java.util.Optional;
 @Repository
 public interface SiteRepository extends JpaRepository<Site, Long> {
     Optional<Site> findBySiteHost(String siteHost);
+    boolean existsBySiteHost(String siteHost);
 }

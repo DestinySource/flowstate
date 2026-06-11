@@ -49,7 +49,7 @@ public class UserService {
         String hashedPassword = passwordEncoder.encode(request.password());
         user.setPassword(hashedPassword);
 
-        user.setRole(Role.USER);
+        user.setRole(Role.ADMIN);
         user.setEnabled(true);
 
         return userRepository.save(user);
