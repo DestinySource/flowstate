@@ -54,7 +54,7 @@
 ### Multi-Tenancy & Website Beheer (Dag 31 - 40)
 *Doel: Zorgen dat één gebruiker meerdere websites kan tracken en de data strikt gescheiden blijft.*
 
-- [ ] **Dag 31:** **Website Entity.** Een `Website` class maken in Java (`id`, `name`, `domain`, `siteId`) met een `@ManyToOne` relatie naar de `User`.
+- [x] **Dag 31:** **Website Entity.** Een `Website` class maken in Java (`id`, `name`, `domain`, `siteId`) met een `@ManyToOne` relatie naar de `User`.
 - [ ] **Dag 32:** **Website CRUD Backend.** Endpoints bouwen om een nieuwe website toe te voegen, op te halen of te verwijderen voor de ingelogde gebruiker.
 - [ ] **Dag 33:** **Data Isolatie Backend.** Je `/api/track` en analytics-endpoints aanpassen zodat ze filteren op de specifieke `site_id` én valideren of die site daadwerkelijk toebehoort aan de opgevraagde context.
 - [ ] **Dag 34:** **Vue Website Beheer UI.** Een pagina maken in je dashboard waar de gebruiker een overzicht ziet van zijn geregistreerde websites met een "Nieuwe site toevoegen" formulier.
