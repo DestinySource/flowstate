@@ -62,7 +62,7 @@ async function handleRegister() {
       <form class="space-y-5" @submit.prevent="handleRegister">
         <div>
         <label for="username" class="block text-[11px] font-bold tracking-wider text-neutral-500 uppercase mb-2">
-          Email
+          Username
         </label>
         <div class="relative flex items-center">
           <span class="absolute left-3 h-1 w-1 bg-cyan-400 rounded-full shadow-[0_0_6px_#00f0ff]"></span>
