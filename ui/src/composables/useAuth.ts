@@ -1,6 +1,12 @@
 import { ref, computed } from 'vue'
 
-const user = ref<{ id: number; username: string } | null>(null)
+export interface UserProfile {
+    id: number;
+    username: string;
+    role: string;
+}
+
+const user = ref<UserProfile | null>(null)
 let tokenInMemory: string | null = null
 
 export function useAuth() {
@@ -33,10 +39,15 @@ export function useAuth() {
                 throw new Error('ACCESS_DENIED: Ongeldige inloggegevens.')
             }
 
-            const data: { id: number; username: string; accessToken: string } = await response.json()
+            const data: { id: number; username: string; role: string; accessToken: string } = await response.json()
 
             tokenInMemory = data.accessToken
-            user.value = { id: data.id, username: data.username }
+
+            user.value = {
+                id: data.id,
+                username: data.username,
+                role: data.role
+            }
 
             sessionStorage.setItem('fs_token', data.accessToken)
             sessionStorage.setItem('fs_user', JSON.stringify(user.value))
