@@ -18,7 +18,7 @@ public class SiteController {
         this.siteService = siteService;
     }
 
-    @PostMapping("register")
+    @PostMapping("/register")
     public ResponseEntity<Site> registerSite(@Valid @RequestBody RegisterSiteRequestDTO request) {
         Site createdSite = siteService.registerNewSite(request);
         return new ResponseEntity<>(createdSite, HttpStatus.CREATED);
