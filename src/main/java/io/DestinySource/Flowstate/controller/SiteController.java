@@ -23,4 +23,10 @@ public class SiteController {
         Site createdSite = siteService.registerNewSite(request);
         return new ResponseEntity<>(createdSite, HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/{id}")
+        public ResponseEntity<Void> deleteSite(@PathVariable Long id) {
+            siteService.deleteSite(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
 }

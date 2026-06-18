@@ -28,4 +28,13 @@ public class SiteService {
         site.setVerified(true);
         return siteRepository.save(site);
     }
+
+    @Transactional
+    @PreAuthorize("hasRole('ADMIN')")
+    public void deleteSite(Long id) {
+        if (!siteRepository.existsById(id)) {
+            throw new BadRequestException("Deze site bestaat niet.");
+        }
+        siteRepository.deleteById(id);
+    }
 }
