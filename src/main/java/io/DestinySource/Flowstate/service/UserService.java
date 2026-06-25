@@ -14,6 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -67,5 +69,13 @@ public class UserService {
                 user.getId(),
                 user.getUsername(),
                 user.getRole().name(), token);
+    }
+
+    @Transactional(readOnly = true)
+    public List<String> getUserSiteHosts(Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new BadRequestException("Gebruiker niet gevonden met ID: " + userId);
+        }
+        return userRepository.findSiteHostsByUserId(userId);
     }
 }
