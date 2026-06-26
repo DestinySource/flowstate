@@ -1,8 +1,5 @@
 package io.DestinySource.Flowstate.dto;
 
 public record LoginResponseDTO(
-        Long id,
-        String username,
-        String role,
         String accessToken) {
 }
