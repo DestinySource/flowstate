@@ -1,154 +1,134 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { motion } from 'motion-v'
-import HeroHeader from '@/components/HeroHeader.vue'
-import ApiButton from "@/components/ApiButton.vue";
+import {ref} from "vue";
 
-const showExtra = ref(false)
-const apiStatus = ref<'idle' | 'loading' | 'success' | 'error'>('idle')
-
-const siteId: string = location.host;
-const getVisitorId = () => localStorage.getItem("user_id") || "anonymous";
-
-const analyticsPayload = {
-  visitorId: getVisitorId(),
-  path: location.pathname,
-  referrer: document.referrer || "direct",
-  siteId: siteId,
-  eventName: "button_click",
-  description: "Er is geklikt op de knop!"
-}
-
-async function handleApiCall() {
-  apiStatus.value = 'loading'
-
-  try {
-    const response = await fetch('https://localhost:8443/api/v1/analytics', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(analyticsPayload)
-    })
-
-    if (!response.ok) throw new Error()
-
-    apiStatus.value = 'success'
-    setTimeout(() => apiStatus.value = 'idle', 2500)
-  } catch (err) {
-    apiStatus.value = 'error'
-    setTimeout(() => apiStatus.value = 'idle', 2500)
-  }
-}
+const activeItem = ref('Home')
+const navItems = ['Home', 'Features', 'Pricing', 'Contact']
 </script>
 
 <template>
-  <motion.main
-      class="home-view"
-      :initial="{ opacity: 0 }"
-      :animate="{ opacity: 1 }"
-  >
-    <HeroHeader />
+  <div class="relative min-h-screen w-full overflow-x-hidden bg-[#0a0f1d] text-white font-sans antialiased">
 
-    <section class="api-section">
-      <div class="stitch-divider"></div>
+    <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
+      <div class="absolute top-[-10%] left-[-10%] h-150 w-150 rounded-full bg-linear-to-r from-purple-600/30 to-pink-500/20 blur-[120px] animate-pulse duration-[8s]"></div>
+      <div class="absolute top-[40%] right-[-5%] h-125 w-125 rounded-full bg-linear-to-tr from-blue-600/25 to-cyan-400/20 blur-[100px] animate-bounce duration-[12s] opacity-70"></div>
+      <div class="absolute bottom-[-10%] left-[20%] h-137.5 w-137.5 rounded-full bg-linear-to-r from-emerald-500/20 to-indigo-600/20 blur-[130px]"></div>
+    </div>
 
-      <div class="api-wrapper">
-        <ApiButton :status="apiStatus" @click="handleApiCall" />
-
-        <p v-if="apiStatus === 'success'" class="api-hint">
-          Data succesvol opgeslagen in PostgreSQL
-        </p>
+    <nav class="fixed top-4 left-1/2 z-50 flex w-[90%] -translate-x-1/2 items-center justify-between rounded-full bg-white/5 px-6 py-3 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-md border border-white/10">
+      <div class="text-xl font-black tracking-wider bg-clip-text text-transparent bg-linear-to-r from-white via-slate-200 to-slate-400">
+        dit moet nog in een navbar
       </div>
 
-      <div class="stitch-divider"></div>
-    </section>
-
-    <section class="interactive-zone">
-      <motion.div
-          layout
-          class="expandable-box"
-          :style="{ borderRadius: '20px' }"
-      >
-        <motion.h2 layout>Interactieve Layout</motion.h2>
-
-        <button @click="showExtra = !showExtra">
-          {{ showExtra ? 'Minder info' : 'Lees meer' }}
-        </button>
-
-        <motion.p
-            v-if="showExtra"
-            :initial="{ opacity: 0, height: 0 }"
-            :animate="{ opacity: 1, height: 'auto' }"
-            class="description"
+      <div class="hidden items-center space-x-2 md:flex">
+        <a
+            v-for="item in navItems"
+            :key="item"
+            href="#"
+            @click.prevent="activeItem = item"
+            class="group relative px-5 py-2 text-sm font-medium transition-colors duration-300"
+            :class="activeItem === item ? 'text-white' : 'text-white/70 hover:text-white'"
         >
-          Dankzij de `layout` prop van Motion-v animeert deze container vloeiend mee
-          wanneer de content verandert.
-        </motion.p>
-      </motion.div>
+          <div
+              class="absolute inset-0 -z-10 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm shadow-[0_4px_12px_rgba(255,255,255,0.03)] transition-all duration-300 ease-out"
+              :class="[
+            activeItem === item
+              ? 'opacity-100 scale-100'
+              : 'opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100'
+          ]"
+          ></div>
+
+          {{ item }}
+        </a>
+      </div>
+
+      <button class="rounded-full bg-white/10 px-5 py-2 text-sm font-medium text-white transition-all hover:bg-white/20 border border-white/20 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+        Sign Up
+      </button>
+    </nav>
+
+    <section class="relative z-10 mx-auto max-w-7xl px-6 pt-32 pb-20 md:pt-48 flex flex-col items-center text-center">
+      <div class="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/15 px-4 py-1.5 text-xs font-medium text-purple-200 backdrop-blur-sm mb-6 shadow-sm">
+        <span class="flex h-2 w-2 rounded-full bg-purple-400 animate-ping"></span>
+        Introducing Liquid Glass v2.0
+      </div>
+
+      <h1 class="max-w-4xl text-4xl font-extrabold tracking-tight sm:text-6xl md:text-7xl bg-clip-text text-transparent bg-linear-to-b from-white via-white to-slate-400">
+        Interfaces that flow like <span class="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-pink-400 to-purple-400">Liquid.</span>
+      </h1>
+
+      <p class="mt-6 max-w-2xl text-lg text-slate-400 md:text-xl">
+        A high-fidelity landing page framework leveraging fluid gradients, frosted panels, and deep refraction to make your UI come alive.
+      </p>
+
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+        <router-link
+            to="/dashboard"
+            class="rounded-xl bg-white text-slate-950 px-6 py-3 font-semibold text-sm shadow-xl hover:bg-slate-100 transition-all transform hover:-translate-y-0.5"
+        >
+          Get Started Free
+        </router-link>
+        <button class="rounded-xl bg-white/5 border border-white/10 px-6 py-3 font-semibold text-sm backdrop-blur-md hover:bg-white/10 transition-all transform hover:-translate-y-0.5">
+          Live Demo
+        </button>
+      </div>
     </section>
-  </motion.main>
+
+    <section class="relative z-10 mx-auto max-w-7xl px-6 py-12">
+      <div class="grid gap-8 md:grid-cols-3">
+
+        <div class="group relative rounded-2xl bg-white/3 border border-white/10 p-8 backdrop-blur-xl transition-all duration-300 hover:border-white/20 hover:bg-white/6 hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
+          <div class="absolute -inset-px rounded-2xl bg-linear-to-tr from-cyan-500/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none"></div>
+          <div class="h-12 w-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-6 text-cyan-400">
+            ⚡
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">Refractive Depth</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Layers stack seamlessly using varied backdrop blurs and micro-borders to mimic physical curved glass.
+          </p>
+        </div>
+
+        <div class="group relative rounded-2xl bg-white/3 border border-white/10 p-8 backdrop-blur-xl transition-all duration-300 hover:border-white/20 hover:bg-white/6 hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
+          <div class="absolute -inset-px rounded-2xl bg-linear-to-tr from-pink-500/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none"></div>
+          <div class="h-12 w-12 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center mb-6 text-pink-400">
+            💧
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">Fluid Dynamics</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Amorphous background elements shift and pulse, catching light through the transparent containers.
+          </p>
+        </div>
+
+        <div class="group relative rounded-2xl bg-white/3 border border-white/10 p-8 backdrop-blur-xl transition-all duration-300 hover:border-white/20 hover:bg-white/6 hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
+          <div class="absolute -inset-px rounded-2xl bg-linear-to-tr from-purple-500/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none"></div>
+          <div class="h-12 w-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mb-6 text-purple-400">
+            🎨
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">Pure Customization</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Easily modify Tailwind tint percentages and blur radii to shift from heavy frost to water-slick glass.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
 </template>
 
 <style scoped>
-.home-view {
-  padding: 2rem;
-  max-width: 1100px;
-  margin: 0 auto;
+/* Tailored animations to enhance the fluid background flow */
+@keyframes pulse {
+  0%, 100% { transform: scale(1) translate(0px, 0px); opacity: 0.6; }
+  50% { transform: scale(1.1) translate(30px, -20px); opacity: 0.8; }
 }
-
-.interactive-zone {
-  margin-top: 6rem;
-  display: flex;
-  justify-content: center;
+@keyframes bounce {
+  0%, 100% { transform: translate(0px, 0px); }
+  50% { transform: translate(-40px, 40px); }
 }
-
-.expandable-box {
-  background: #f0f0f5;
-  padding: 2rem;
-  width: 400px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+.animate-pulse {
+  animation: pulse 12s infinite ease-in-out;
 }
-
-button {
-  background: #111;
-  color: white;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 1rem;
-}
-
-.description {
-  margin-top: 1.5rem;
-  line-height: 1.6;
-  color: #444;
-  overflow: hidden;
-}
-
-.api-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 4rem 0;
-}
-
-.api-wrapper {
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-
-.api-hint {
-  font-size: 0.85rem;
-  color: #10b981;
-  font-weight: 500;
-}
-
-.stitch-divider {
-  width: 100%;
-  height: 1px;
-  background: repeating-linear-gradient(90deg, #ddd, #ddd 10px, transparent 10px, transparent 20px);
+.animate-bounce {
+  animation: bounce 16s infinite ease-in-out;
 }
 </style>
